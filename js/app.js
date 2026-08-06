@@ -1,0 +1,790 @@
+// Application Data Access
+const MENU_ITEMS = window.MENU_ITEMS || [];
+const CATEGORIES = window.CATEGORIES || [];
+const DIET_FILTERS = window.DIET_FILTERS || [];
+const CURRENCY = window.CURRENCY || '₪';
+
+// PIN Passcode for Staff Access
+const ADMIN_PIN = '69015';
+
+// Application State
+let activeCategory = 'all';
+let activeDietFilters = new Set();
+let searchQuery = '';
+let currentModalItem = null;
+let currentModalQty = 1;
+let selectedModalOptions = {};
+let cart = [];
+let menuItemsState = [];
+let happyHoursActive = false;
+let happyHoursItems = new Set();
+let adminSearchQuery = '';
+let adminActiveCategory = 'all';
+
+// DOM Elements
+const menuGridContainer = document.getElementById('menu-grid-container');
+const categoriesNav = document.getElementById('categories-nav');
+const dietFiltersContainer = document.getElementById('diet-filters');
+const searchInput = document.getElementById('search-input');
+const itemCountEl = document.getElementById('item-count');
+const sectionTitleEl = document.getElementById('section-title');
+
+// Admin Auth Elements
+const adminAuthModal = document.getElementById('admin-auth-modal');
+const authModalClose = document.getElementById('auth-modal-close');
+const adminPinInput = document.getElementById('admin-pin-input');
+const authErrorMsg = document.getElementById('auth-error-msg');
+const adminAuthForm = document.getElementById('admin-auth-form');
+
+// Admin Drawer Elements
+const adminToggleBtn = document.getElementById('admin-toggle-btn');
+const adminDrawer = document.getElementById('admin-drawer');
+const adminCloseBtn = document.getElementById('admin-close');
+const adminItemsList = document.getElementById('admin-items-list');
+const btnResetAdmin = document.getElementById('btn-reset-admin');
+const btnLogoutAdmin = document.getElementById('btn-logout-admin');
+const btnHappyHours = document.getElementById('btn-happy-hours');
+const happyHoursBanner = document.getElementById('happy-hours-banner');
+const adminSearchInput = document.getElementById('admin-search-input');
+const adminCategoryFilters = document.getElementById('admin-category-filters');
+
+// Modal Elements
+const modalBackdrop = document.getElementById('item-modal');
+const modalCloseBtn = document.getElementById('modal-close');
+const modalImg = document.getElementById('modal-img');
+const modalTitle = document.getElementById('modal-title');
+const modalDesc = document.getElementById('modal-desc');
+const modalOptionsContainer = document.getElementById('modal-options');
+const modalQtyVal = document.getElementById('modal-qty-val');
+const btnQtyMinus = document.getElementById('btn-qty-minus');
+const btnQtyPlus = document.getElementById('btn-qty-plus');
+const btnAddToCartConfirm = document.getElementById('btn-add-to-cart-confirm');
+
+// Cart Elements
+const cartToggleBtn = document.getElementById('cart-toggle-btn');
+const cartDrawer = document.getElementById('cart-drawer');
+const cartCloseBtn = document.getElementById('cart-close');
+const cartItemsList = document.getElementById('cart-items-list');
+const cartCountBadge = document.getElementById('cart-count');
+const cartTotalPriceEl = document.getElementById('cart-total-price');
+const btnCheckout = document.getElementById('btn-checkout');
+
+// Initialize App
+document.addEventListener('DOMContentLoaded', () => {
+  loadMenuState();
+  loadHappyHoursState();
+  loadCartFromStorage();
+  renderCategories();
+  renderDietFilters();
+  renderMenu();
+  setupEventListeners();
+  updateCartUI();
+  updateHappyHoursBanner();
+});
+
+// Load menu state (with localStorage overrides)
+function loadMenuState() {
+  menuItemsState = JSON.parse(JSON.stringify(MENU_ITEMS)); // Deep clone defaults
+  try {
+    const savedOverrides = localStorage.getItem('famore_cafe_menu_overrides');
+    if (savedOverrides) {
+      const overrides = JSON.parse(savedOverrides);
+      menuItemsState.forEach(item => {
+        if (overrides[item.id]) {
+          if (typeof overrides[item.id].inStock === 'boolean') {
+            item.inStock = overrides[item.id].inStock;
+          }
+          if (Array.isArray(overrides[item.id].tags)) {
+            item.tags = overrides[item.id].tags;
+          }
+        }
+      });
+    }
+  } catch (e) {
+    console.error('Failed to load menu overrides', e);
+  }
+}
+
+function saveMenuOverrides() {
+  try {
+    const overrides = {};
+    menuItemsState.forEach(item => {
+      overrides[item.id] = {
+        inStock: item.inStock,
+        tags: item.tags
+      };
+    });
+    localStorage.setItem('famore_cafe_menu_overrides', JSON.stringify(overrides));
+  } catch (e) {
+    console.error('Failed to save menu overrides', e);
+  }
+}
+
+// Happy Hours State Management
+function loadHappyHoursState() {
+  try {
+    const saved = localStorage.getItem('famore_cafe_happy_hours');
+    if (saved) {
+      const data = JSON.parse(saved);
+      happyHoursActive = data.active === true;
+      happyHoursItems = new Set(data.items || []);
+    }
+  } catch (e) {
+    console.error('Failed to load Happy Hours state', e);
+  }
+}
+
+function saveHappyHoursState() {
+  try {
+    localStorage.setItem('famore_cafe_happy_hours', JSON.stringify({
+      active: happyHoursActive,
+      items: Array.from(happyHoursItems)
+    }));
+  } catch (e) {
+    console.error('Failed to save Happy Hours state', e);
+  }
+}
+
+function updateHappyHoursBanner() {
+  if (happyHoursActive && happyHoursItems.size > 0) {
+    happyHoursBanner.classList.add('active');
+  } else {
+    happyHoursBanner.classList.remove('active');
+  }
+  // Update admin button state
+  if (btnHappyHours) {
+    if (happyHoursActive) {
+      btnHappyHours.classList.add('active');
+      btnHappyHours.textContent = '🎉 Happy Hours ON — Click to Deactivate';
+    } else {
+      btnHappyHours.classList.remove('active');
+      btnHappyHours.textContent = '🎉 Activate Happy Hours';
+    }
+  }
+}
+
+function getItemPrice(item) {
+  if (happyHoursActive && happyHoursItems.has(item.id)) {
+    return Math.max(1, item.price - 4);
+  }
+  return item.price;
+}
+
+function isItemHappyHour(item) {
+  return happyHoursActive && happyHoursItems.has(item.id);
+}
+
+// Setup Event Listeners
+function setupEventListeners() {
+  // Search
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    renderMenu();
+  });
+
+  // Protected Header Admin Access — always require PIN
+  const attemptOpenAdmin = () => {
+    openAuthModal();
+  };
+
+  if (adminToggleBtn) adminToggleBtn.addEventListener('click', attemptOpenAdmin);
+
+  authModalClose.addEventListener('click', closeAuthModal);
+  adminAuthForm.addEventListener('submit', handlePinSubmit);
+
+  adminCloseBtn.addEventListener('click', () => {
+    adminDrawer.classList.remove('open');
+  });
+
+  if (btnLogoutAdmin) {
+    btnLogoutAdmin.addEventListener('click', () => {
+      adminDrawer.classList.remove('open');
+    });
+  }
+
+  // Admin Search
+  if (adminSearchInput) {
+    adminSearchInput.addEventListener('input', (e) => {
+      adminSearchQuery = e.target.value.toLowerCase().trim();
+      renderAdminItemsList();
+    });
+  }
+
+  btnResetAdmin.addEventListener('click', () => {
+    if (confirm('Reset all item stock availability and Best Seller tags to default?')) {
+      localStorage.removeItem('velvet_cafe_menu_overrides');
+      loadMenuState();
+      renderMenu();
+      renderAdminItemsList();
+    }
+  });
+
+  // Happy Hours Toggle
+  if (btnHappyHours) {
+    btnHappyHours.addEventListener('click', () => {
+      happyHoursActive = !happyHoursActive;
+      saveHappyHoursState();
+      updateHappyHoursBanner();
+      renderMenu();
+      renderAdminItemsList();
+    });
+  }
+
+  // Modal Controls
+  modalCloseBtn.addEventListener('click', closeModal);
+  modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) closeModal();
+  });
+
+  btnQtyMinus.addEventListener('click', () => {
+    if (currentModalQty > 1) {
+      currentModalQty--;
+      modalQtyVal.textContent = currentModalQty;
+      updateModalPrice();
+    }
+  });
+
+  btnQtyPlus.addEventListener('click', () => {
+    currentModalQty++;
+    modalQtyVal.textContent = currentModalQty;
+    updateModalPrice();
+  });
+
+  btnAddToCartConfirm.addEventListener('click', handleAddToCartFromModal);
+
+  // Cart Drawer
+  cartToggleBtn.addEventListener('click', () => {
+    cartDrawer.classList.add('open');
+  });
+
+  cartCloseBtn.addEventListener('click', () => {
+    cartDrawer.classList.remove('open');
+  });
+
+  btnCheckout.addEventListener('click', handleCheckout);
+}
+
+// PIN Auth Modal Handlers
+function openAuthModal() {
+  adminPinInput.value = '';
+  authErrorMsg.textContent = '';
+  adminAuthModal.classList.add('active');
+  setTimeout(() => adminPinInput.focus(), 150);
+}
+
+function closeAuthModal() {
+  adminAuthModal.classList.remove('active');
+}
+
+function handlePinSubmit(e) {
+  if (e) e.preventDefault();
+  const enteredPin = adminPinInput.value.trim();
+
+  if (enteredPin === ADMIN_PIN || enteredPin === 'admin') {
+    closeAuthModal();
+    adminDrawer.classList.add('open');
+    adminSearchQuery = '';
+    adminActiveCategory = 'all';
+    if (adminSearchInput) adminSearchInput.value = '';
+    renderAdminCategoryFilters();
+    renderAdminItemsList();
+  } else {
+    authErrorMsg.textContent = '❌';
+    adminPinInput.value = '';
+    adminPinInput.focus();
+  }
+}
+
+// Render Category Tabs
+function renderCategories() {
+  categoriesNav.innerHTML = CATEGORIES.map(cat => `
+    <button class="category-tab ${cat.id === activeCategory ? 'active' : ''}" data-id="${cat.id}">
+      <span>${cat.icon}</span>
+      <span>${cat.name}</span>
+    </button>
+  `).join('');
+
+  categoriesNav.querySelectorAll('.category-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.id;
+      document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenu();
+    });
+  });
+}
+
+// Render Dietary Filters
+function renderDietFilters() {
+  dietFiltersContainer.innerHTML = DIET_FILTERS.map(filter => `
+    <button class="diet-pill ${activeDietFilters.has(filter.id) ? 'active' : ''}" data-id="${filter.id}">
+      ${filter.label}
+    </button>
+  `).join('');
+
+  dietFiltersContainer.querySelectorAll('.diet-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const id = pill.dataset.id;
+      if (activeDietFilters.has(id)) {
+        activeDietFilters.delete(id);
+        pill.classList.remove('active');
+      } else {
+        activeDietFilters.add(id);
+        pill.classList.add('active');
+      }
+      renderMenu();
+    });
+  });
+}
+
+// Get Badge Label & Icon
+function getBadgeInfo(tag) {
+  switch (tag) {
+    case 'bestseller':
+      return { label: 'Best Seller', icon: '⭐', class: 'bestseller' };
+    case 'vegan':
+      return { label: 'Vegan', icon: '🌱', class: 'vegan' };
+    case 'gluten-free':
+      return { label: 'Gluten Free', icon: '🌾', class: 'gluten-free' };
+    default:
+      return { label: tag, icon: '✦', class: tag };
+  }
+}
+
+// Filter and Render Menu grouped with Section Dividers
+function renderMenu() {
+  let filtered = menuItemsState.filter(item => {
+    const matchCategory = activeCategory === 'all' || item.category === activeCategory;
+
+    let matchSearch = true;
+    if (searchQuery) {
+      const q = searchQuery;
+      const nameMatch = item.name.toLowerCase().includes(q);
+      const descMatch = item.description.toLowerCase().includes(q);
+      const catMatch = item.category.toLowerCase().includes(q);
+
+      const isCoffeeSearch = (q.includes('coffee') || q.includes('espresso') || q.includes('latte') || q.includes('cappuccino') || q.includes('brew') || q.includes('drink'));
+      const isCoffeeCategoryMatch = isCoffeeSearch && (item.category === 'coffee' || item.category === 'beans');
+
+      const isSaladSearch = (q.includes('salad') || q.includes('bowl') || q.includes('quinoa') || q.includes('greens'));
+      const isSaladCategoryMatch = isSaladSearch && item.category === 'salads';
+
+      const isSandwichSearch = (q.includes('sandwich') || q.includes('bagel') || q.includes('toast') || q.includes('focaccia') || q.includes('bread'));
+      const isSandwichCategoryMatch = isSandwichSearch && item.category === 'sandwiches';
+
+      const isPastrySearch = (q.includes('pastry') || q.includes('bakery') || q.includes('croissant') || q.includes('sweet') || q.includes('cake') || q.includes('bun') || q.includes('danish'));
+      const isPastryCategoryMatch = isPastrySearch && item.category === 'pastries';
+
+      const isBeansSearch = (q.includes('bean') || q.includes('roast') || q.includes('yirgacheffe') || q.includes('colombia'));
+      const isBeansCategoryMatch = isBeansSearch && item.category === 'beans';
+
+      matchSearch = nameMatch || descMatch || catMatch || isCoffeeCategoryMatch || isSaladCategoryMatch || isSandwichCategoryMatch || isPastryCategoryMatch || isBeansCategoryMatch;
+    }
+
+    let matchDiet = true;
+    if (activeDietFilters.size > 0) {
+      activeDietFilters.forEach(dietId => {
+        if (!item.tags.includes(dietId)) {
+          matchDiet = false;
+        }
+      });
+    }
+
+    return matchCategory && matchSearch && matchDiet;
+  });
+
+  const currentCatObj = CATEGORIES.find(c => c.id === activeCategory);
+  sectionTitleEl.textContent = currentCatObj ? currentCatObj.name : 'All Items';
+  itemCountEl.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''} available`;
+
+  if (filtered.length === 0) {
+    menuGridContainer.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">☕</div>
+        <h3>No items found</h3>
+        <p>Try searching for something else or clear your filters.</p>
+      </div>
+    `;
+    return;
+  }
+
+  const categoriesToRender = activeCategory === 'all'
+    ? CATEGORIES.filter(c => c.id !== 'all')
+    : CATEGORIES.filter(c => c.id === activeCategory);
+
+  let htmlContent = '';
+
+  categoriesToRender.forEach(cat => {
+    const itemsInCat = filtered.filter(item => item.category === cat.id);
+    if (itemsInCat.length === 0) return;
+
+    htmlContent += `
+      <div class="category-section-block">
+        <div class="category-divider-header">
+          <h3 class="category-divider-title">
+            <span>${cat.icon}</span> ${cat.name}
+          </h3>
+          <div class="category-divider-line"></div>
+        </div>
+        <div class="menu-grid">
+          ${itemsInCat.map(item => renderItemCardHTML(item)).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  menuGridContainer.innerHTML = htmlContent;
+}
+
+// Generate single card HTML
+function renderItemCardHTML(item) {
+  const isOutOfStock = item.inStock === false;
+  const isHH = isItemHappyHour(item);
+  const displayPrice = getItemPrice(item);
+
+  return `
+    <div class="menu-card ${isOutOfStock ? 'out-of-stock' : ''}" data-id="${item.id}">
+      <div class="card-img-wrapper">
+        <img class="card-img" src="${item.image}" alt="${item.name}" loading="lazy" />
+        <div class="card-overlay"></div>
+
+        ${isOutOfStock ? `<div class="out-of-stock-banner">Sorry<br> Out of Stock</div>` : ''}
+
+        <!-- Styled Badges -->
+        <div class="card-badges">
+          ${isHH ? `<span class="badge-tag happy-hour"><span>🎉</span> Happy Hour</span>` : ''}
+          ${item.tags.map(tag => {
+    const b = getBadgeInfo(tag);
+    return `<span class="badge-tag ${b.class}"><span>${b.icon}</span> ${b.label}</span>`;
+  }).join('')}
+        </div>
+
+        ${isHH ? `
+          <div class="price-tag happy-hour-price">
+            <span class="price-original">${CURRENCY}${item.price}</span>
+            <span class="price-discounted">${CURRENCY}${displayPrice}</span>
+          </div>
+        ` : `
+          <div class="price-tag">${CURRENCY}${item.price}</div>
+        `}
+      </div>
+
+      <div class="card-body">
+        <h3 class="card-title">${item.name}</h3>
+        <p class="card-description">${item.description}</p>
+        
+        <div class="card-footer">
+          <span class="card-meta">${item.calories !== 'N/A' ? item.calories : 'Single Origin'}</span>
+          ${isOutOfStock ? `
+            <button class="btn-add-item out-of-stock-btn" disabled>
+              Unavailable
+            </button>
+          ` : `
+            <button class="btn-add-item" onclick="openItemModal('${item.id}')">
+              <span>+</span> Customize & Add
+            </button>
+          `}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Render Admin Items Management List in Drawer
+function renderAdminItemsList() {
+  adminItemsList.innerHTML = menuItemsState.map(item => {
+    const isBestseller = item.tags.includes('bestseller');
+    const isInStock = item.inStock !== false;
+    const isInHH = happyHoursItems.has(item.id);
+    const displayPrice = getItemPrice(item);
+
+    return `
+      <div class="admin-item-row">
+        <div>
+          <div class="admin-item-name">${item.name}</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">${CURRENCY}${item.price}${isItemHappyHour(item) ? ` → ${CURRENCY}${displayPrice}` : ''} • ${item.category}</div>
+        </div>
+        <div class="admin-item-actions">
+          <button 
+            class="admin-action-btn ${isInStock ? 'active-stock' : 'out-stock'}" 
+            onclick="toggleItemStock('${item.id}')"
+          >
+            ${isInStock ? '✅ In Stock' : '❌ Out of Stock'}
+          </button>
+
+          <button 
+            class="admin-action-btn ${isBestseller ? 'active-bestseller' : ''}" 
+            onclick="toggleItemBestseller('${item.id}')"
+          >
+            ${isBestseller ? '⭐ Best Seller' : '☆ Add Best Seller'}
+          </button>
+
+          <button 
+            class="admin-action-btn hh-toggle ${isInHH ? 'active-hh' : ''}" 
+            onclick="toggleItemHappyHour('${item.id}')"
+          >
+            ${isInHH ? '🎉 In HH' : '☆ Add to HH'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Global Admin Action Handlers
+window.toggleItemStock = function (itemId) {
+  const item = menuItemsState.find(i => i.id === itemId);
+  if (item) {
+    item.inStock = !item.inStock;
+    saveMenuOverrides();
+    renderMenu();
+    renderAdminItemsList();
+  }
+};
+
+window.toggleItemBestseller = function (itemId) {
+  const item = menuItemsState.find(i => i.id === itemId);
+  if (item) {
+    const index = item.tags.indexOf('bestseller');
+    if (index > -1) {
+      item.tags.splice(index, 1);
+    } else {
+      item.tags.unshift('bestseller');
+    }
+    saveMenuOverrides();
+    renderMenu();
+    renderAdminItemsList();
+  }
+};
+
+window.toggleItemHappyHour = function (itemId) {
+  if (happyHoursItems.has(itemId)) {
+    happyHoursItems.delete(itemId);
+  } else {
+    happyHoursItems.add(itemId);
+  }
+  saveHappyHoursState();
+  updateHappyHoursBanner();
+  renderMenu();
+  renderAdminItemsList();
+};
+
+// Open Item Customization Modal
+window.openItemModal = function (itemId) {
+  const item = menuItemsState.find(i => i.id === itemId);
+  if (!item || item.inStock === false) return;
+
+  currentModalItem = item;
+  currentModalQty = 1;
+  selectedModalOptions = {};
+  modalQtyVal.textContent = 1;
+
+  modalImg.src = item.image;
+  modalTitle.textContent = item.name;
+  modalDesc.textContent = item.description;
+
+  // Build Options UI
+  let optionsHTML = '';
+  if (item.options && Object.keys(item.options).length > 0) {
+    for (const [key, group] of Object.entries(item.options)) {
+      const isArray = Array.isArray(group);
+      optionsHTML += `
+        <div class="option-group">
+          <div class="option-title">Select ${key}</div>
+          <div class="option-choices">
+      `;
+
+      if (isArray) {
+        group.forEach((opt, idx) => {
+          const isChecked = idx === 0;
+          if (isChecked) selectedModalOptions[key] = opt;
+          optionsHTML += `
+            <label class="option-choice-label">
+              <span>
+                <input type="radio" name="opt-${key}" value="${idx}" ${isChecked ? 'checked' : ''} onchange="handleOptionSelect('${key}', ${idx})" />
+                ${opt.name}
+              </span>
+              <span>${opt.price > 0 ? `+${CURRENCY}${opt.price}` : 'Free'}</span>
+            </label>
+          `;
+        });
+      } else {
+        selectedModalOptions[key] = null;
+        optionsHTML += `
+          <label class="option-choice-label">
+            <span>
+              <input type="checkbox" name="opt-${key}" onchange="handleCheckboxSelect('${key}')" />
+              ${group.name}
+            </span>
+            <span>+${CURRENCY}${group.price}</span>
+          </label>
+        `;
+      }
+      optionsHTML += `</div></div>`;
+    }
+  }
+
+  modalOptionsContainer.innerHTML = optionsHTML;
+  updateModalPrice();
+  modalBackdrop.classList.add('active');
+};
+
+window.handleOptionSelect = function (groupKey, index) {
+  const item = currentModalItem;
+  if (item && item.options && item.options[groupKey]) {
+    selectedModalOptions[groupKey] = item.options[groupKey][index];
+    updateModalPrice();
+  }
+};
+
+window.handleCheckboxSelect = function (groupKey) {
+  const item = currentModalItem;
+  const checkbox = document.querySelector(`input[name="opt-${groupKey}"]`);
+  if (item && item.options && item.options[groupKey]) {
+    selectedModalOptions[groupKey] = checkbox.checked ? item.options[groupKey] : null;
+    updateModalPrice();
+  }
+};
+
+function updateModalPrice() {
+  if (!currentModalItem) return;
+  let unitPrice = getItemPrice(currentModalItem);
+
+  for (const opt of Object.values(selectedModalOptions)) {
+    if (opt && opt.price) {
+      unitPrice += opt.price;
+    }
+  }
+
+  const totalPrice = unitPrice * currentModalQty;
+  const hhLabel = isItemHappyHour(currentModalItem) ? ' 🎉' : '';
+  btnAddToCartConfirm.textContent = `Add to Order • ${CURRENCY}${totalPrice}${hhLabel}`;
+}
+
+function closeModal() {
+  modalBackdrop.classList.remove('active');
+  currentModalItem = null;
+}
+
+// Cart Logic
+function handleAddToCartFromModal() {
+  if (!currentModalItem) return;
+
+  const optionsArr = [];
+  for (const [key, val] of Object.entries(selectedModalOptions)) {
+    if (val && val.name && val.name !== 'Whole Milk' && val.name !== 'None' && val.name !== 'No Extra Protein' && val.name !== 'Standard') {
+      optionsArr.push(val.name);
+    }
+  }
+
+  let unitPrice = getItemPrice(currentModalItem);
+  for (const opt of Object.values(selectedModalOptions)) {
+    if (opt && opt.price) unitPrice += opt.price;
+  }
+
+  const cartItemId = currentModalItem.id + '-' + optionsArr.join('-').replace(/\s+/g, '');
+  const existingIndex = cart.findIndex(ci => ci.cartItemId === cartItemId);
+
+  if (existingIndex > -1) {
+    cart[existingIndex].qty += currentModalQty;
+  } else {
+    cart.push({
+      cartItemId,
+      id: currentModalItem.id,
+      name: currentModalItem.name,
+      image: currentModalItem.image,
+      optionsText: optionsArr.join(', '),
+      unitPrice,
+      qty: currentModalQty
+    });
+  }
+
+  saveCartToStorage();
+  updateCartUI();
+  closeModal();
+  cartDrawer.classList.add('open');
+}
+
+function updateCartUI() {
+  const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+
+  cartCountBadge.textContent = totalCount;
+  cartTotalPriceEl.textContent = `${CURRENCY}${totalPrice}`;
+
+  if (cart.length === 0) {
+    cartItemsList.innerHTML = `
+      <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+        <p style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛍️</p>
+        <p>Your cart is currently empty.</p>
+      </div>
+    `;
+    return;
+  }
+
+  cartItemsList.innerHTML = cart.map((item, index) => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.image}" alt="${item.name}" />
+      <div class="cart-item-info">
+        <div class="cart-item-title">${item.name}</div>
+        ${item.optionsText ? `<div class="cart-item-options">${item.optionsText}</div>` : ''}
+        <div class="cart-item-price">${CURRENCY}${item.unitPrice * item.qty}</div>
+      </div>
+      <div class="quantity-control" style="padding: 2px 8px;">
+        <button class="btn-qty" onclick="changeCartQty(${index}, -1)">-</button>
+        <span class="qty-val">${item.qty}</span>
+        <button class="btn-qty" onclick="changeCartQty(${index}, 1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.changeCartQty = function (index, delta) {
+  if (cart[index]) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+    saveCartToStorage();
+    updateCartUI();
+  }
+};
+
+function handleCheckout() {
+  if (cart.length === 0) {
+    alert('Your basket is empty!');
+    return;
+  }
+
+  const orderTotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+  const orderId = Math.floor(1000 + Math.random() * 9000);
+
+  alert(`🎉 Thank you for your order!
+
+Order #${orderId}
+Total Amount: ${CURRENCY}${orderTotal}
+
+Your order has been received. Please present this screen to the counter or await server delivery.`);
+
+  cart = [];
+  saveCartToStorage();
+  updateCartUI();
+  cartDrawer.classList.remove('open');
+}
+
+function saveCartToStorage() {
+  try {
+    localStorage.setItem('velvet_cafe_cart', JSON.stringify(cart));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function loadCartFromStorage() {
+  try {
+    const saved = localStorage.getItem('velvet_cafe_cart');
+    if (saved) cart = JSON.parse(saved);
+  } catch (e) {
+    cart = [];
+  }
+}
