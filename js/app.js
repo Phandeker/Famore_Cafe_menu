@@ -82,9 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHappyHoursBanner();
 });
 
-// Load menu state (with localStorage overrides)
+// Load menu state (with localStorage overrides for inStock status)
 function loadMenuState() {
-  menuItemsState = JSON.parse(JSON.stringify(MENU_ITEMS)); // Deep clone defaults
+  menuItemsState = JSON.parse(JSON.stringify(MENU_ITEMS)); // Deep clone defaults from data.js
   try {
     const savedOverrides = localStorage.getItem('famore_cafe_menu_overrides');
     if (savedOverrides) {
@@ -93,9 +93,6 @@ function loadMenuState() {
         if (overrides[item.id]) {
           if (typeof overrides[item.id].inStock === 'boolean') {
             item.inStock = overrides[item.id].inStock;
-          }
-          if (Array.isArray(overrides[item.id].tags)) {
-            item.tags = overrides[item.id].tags;
           }
         }
       });
@@ -110,8 +107,7 @@ function saveMenuOverrides() {
     const overrides = {};
     menuItemsState.forEach(item => {
       overrides[item.id] = {
-        inStock: item.inStock,
-        tags: item.tags
+        inStock: item.inStock
       };
     });
     localStorage.setItem('famore_cafe_menu_overrides', JSON.stringify(overrides));
@@ -146,10 +142,12 @@ function saveHappyHoursState() {
 }
 
 function updateHappyHoursBanner() {
-  if (happyHoursActive && happyHoursItems.size > 0) {
-    happyHoursBanner.classList.add('active');
-  } else {
-    happyHoursBanner.classList.remove('active');
+  if (happyHoursBanner) {
+    if (happyHoursActive && happyHoursItems.size > 0) {
+      happyHoursBanner.classList.add('active');
+    } else {
+      happyHoursBanner.classList.remove('active');
+    }
   }
   // Update admin button state
   if (btnHappyHours) {
@@ -177,7 +175,7 @@ function isItemHappyHour(item) {
 // Setup Event Listeners
 function setupEventListeners() {
   // Search
-  searchInput.addEventListener('input', (e) => {
+  searchInput?.addEventListener('input', (e) => {
     searchQuery = e.target.value.toLowerCase().trim();
     renderMenu();
   });
@@ -187,31 +185,27 @@ function setupEventListeners() {
     openAuthModal();
   };
 
-  if (adminToggleBtn) adminToggleBtn.addEventListener('click', attemptOpenAdmin);
+  adminToggleBtn?.addEventListener('click', attemptOpenAdmin);
+  authModalClose?.addEventListener('click', closeAuthModal);
+  adminAuthForm?.addEventListener('submit', handlePinSubmit);
 
-  authModalClose.addEventListener('click', closeAuthModal);
-  adminAuthForm.addEventListener('submit', handlePinSubmit);
-
-  adminCloseBtn.addEventListener('click', () => {
-    adminDrawer.classList.remove('open');
+  adminCloseBtn?.addEventListener('click', () => {
+    adminDrawer?.classList.remove('open');
   });
 
-  if (btnLogoutAdmin) {
-    btnLogoutAdmin.addEventListener('click', () => {
-      adminDrawer.classList.remove('open');
-    });
-  }
+  btnLogoutAdmin?.addEventListener('click', () => {
+    adminDrawer?.classList.remove('open');
+  });
 
   // Admin Search
-  if (adminSearchInput) {
-    adminSearchInput.addEventListener('input', (e) => {
-      adminSearchQuery = e.target.value.toLowerCase().trim();
-      renderAdminItemsList();
-    });
-  }
+  adminSearchInput?.addEventListener('input', (e) => {
+    adminSearchQuery = e.target.value.toLowerCase().trim();
+    renderAdminItemsList();
+  });
 
-  btnResetAdmin.addEventListener('click', () => {
+  btnResetAdmin?.addEventListener('click', () => {
     if (confirm('Reset all item stock availability and Best Seller tags to default?')) {
+      localStorage.removeItem('famore_cafe_menu_overrides');
       localStorage.removeItem('velvet_cafe_menu_overrides');
       loadMenuState();
       renderMenu();
@@ -220,76 +214,76 @@ function setupEventListeners() {
   });
 
   // Happy Hours Toggle
-  if (btnHappyHours) {
-    btnHappyHours.addEventListener('click', () => {
-      happyHoursActive = !happyHoursActive;
-      saveHappyHoursState();
-      updateHappyHoursBanner();
-      renderMenu();
-      renderAdminItemsList();
-    });
-  }
+  btnHappyHours?.addEventListener('click', () => {
+    happyHoursActive = !happyHoursActive;
+    saveHappyHoursState();
+    updateHappyHoursBanner();
+    renderMenu();
+    renderAdminItemsList();
+  });
 
   // Modal Controls
-  modalCloseBtn.addEventListener('click', closeModal);
-  modalBackdrop.addEventListener('click', (e) => {
+  modalCloseBtn?.addEventListener('click', closeModal);
+  modalBackdrop?.addEventListener('click', (e) => {
     if (e.target === modalBackdrop) closeModal();
   });
 
-  btnQtyMinus.addEventListener('click', () => {
+  btnQtyMinus?.addEventListener('click', () => {
     if (currentModalQty > 1) {
       currentModalQty--;
-      modalQtyVal.textContent = currentModalQty;
+      if (modalQtyVal) modalQtyVal.textContent = currentModalQty;
       updateModalPrice();
     }
   });
 
-  btnQtyPlus.addEventListener('click', () => {
+  btnQtyPlus?.addEventListener('click', () => {
     currentModalQty++;
-    modalQtyVal.textContent = currentModalQty;
+    if (modalQtyVal) modalQtyVal.textContent = currentModalQty;
     updateModalPrice();
   });
 
-  btnAddToCartConfirm.addEventListener('click', handleAddToCartFromModal);
+  btnAddToCartConfirm?.addEventListener('click', handleAddToCartFromModal);
 
   // Cart Drawer
-  cartToggleBtn.addEventListener('click', () => {
-    cartDrawer.classList.add('open');
+  cartToggleBtn?.addEventListener('click', () => {
+    cartDrawer?.classList.add('open');
   });
 
-  cartCloseBtn.addEventListener('click', () => {
-    cartDrawer.classList.remove('open');
+  cartCloseBtn?.addEventListener('click', () => {
+    cartDrawer?.classList.remove('open');
   });
 
-  btnCheckout.addEventListener('click', handleCheckout);
+  btnCheckout?.addEventListener('click', handleCheckout);
 }
 
 // PIN Auth Modal Handlers
 function openAuthModal() {
-  adminPinInput.value = '';
-  authErrorMsg.textContent = '';
+  if (!adminAuthModal) return;
+  if (adminPinInput) adminPinInput.value = '';
+  if (authErrorMsg) authErrorMsg.textContent = '';
   adminAuthModal.classList.add('active');
-  setTimeout(() => adminPinInput.focus(), 150);
+  setTimeout(() => adminPinInput?.focus(), 150);
 }
 
 function closeAuthModal() {
-  adminAuthModal.classList.remove('active');
+  adminAuthModal?.classList.remove('active');
 }
 
 function handlePinSubmit(e) {
   if (e) e.preventDefault();
+  if (!adminPinInput) return;
   const enteredPin = adminPinInput.value.trim();
 
   if (enteredPin === ADMIN_PIN || enteredPin === 'admin') {
     closeAuthModal();
-    adminDrawer.classList.add('open');
+    adminDrawer?.classList.add('open');
     adminSearchQuery = '';
     adminActiveCategory = 'all';
     if (adminSearchInput) adminSearchInput.value = '';
     renderAdminCategoryFilters();
     renderAdminItemsList();
   } else {
-    authErrorMsg.textContent = '❌';
+    if (authErrorMsg) authErrorMsg.textContent = '❌';
     adminPinInput.value = '';
     adminPinInput.focus();
   }
@@ -297,6 +291,7 @@ function handlePinSubmit(e) {
 
 // Render Category Tabs
 function renderCategories() {
+  if (!categoriesNav) return;
   categoriesNav.innerHTML = CATEGORIES.map(cat => `
     <button class="category-tab ${cat.id === activeCategory ? 'active' : ''}" data-id="${cat.id}">
       <span>${cat.icon}</span>
@@ -314,8 +309,11 @@ function renderCategories() {
   });
 }
 
+// ------------------------------------------------------
+
 // Render Dietary Filters
 function renderDietFilters() {
+  if (!dietFiltersContainer) return;
   dietFiltersContainer.innerHTML = DIET_FILTERS.map(filter => `
     <button class="diet-pill ${activeDietFilters.has(filter.id) ? 'active' : ''}" data-id="${filter.id}">
       ${filter.label}
@@ -337,22 +335,51 @@ function renderDietFilters() {
   });
 }
 
+// ------------------------------------------------------
+
 // Get Badge Label & Icon
 function getBadgeInfo(tag) {
-  switch (tag) {
-    case 'bestseller':
-      return { label: 'Best Seller', icon: '⭐', class: 'bestseller' };
-    case 'vegan':
-      return { label: 'Vegan', icon: '🌱', class: 'vegan' };
-    case 'gluten-free':
-      return { label: 'Gluten Free', icon: '🌾', class: 'gluten-free' };
-    default:
-      return { label: tag, icon: '✦', class: tag };
+  if (!tag) return null;
+  const tagLower = tag.toLowerCase().trim();
+
+  const knownBadges = {
+    'bestseller': { label: 'Best Seller', icon: '⭐', class: 'bestseller' },
+    'vegan': { label: 'Vegan', icon: '🌱', class: 'vegan' },
+    'gluten-free': { label: 'Gluten-Free', icon: '🌾', class: 'gluten-free' },
+    'vegetarian': { label: 'Vegetarian', icon: '🧀', class: 'vegetarian' },
+    'spicy': { label: 'Spicy', icon: '🌶️', class: 'spicy' },
+    'new': { label: 'New', icon: '✨', class: 'new' },
+    'organic': { label: 'Organic', icon: '🍃', class: 'organic' },
+    'sugar-free': { label: 'Sugar-Free', icon: '🍃', class: 'sugar-free' }
+  };
+
+  if (knownBadges[tagLower]) {
+    return knownBadges[tagLower];
   }
+
+  // Check in DIET_FILTERS if present
+  const customFilter = DIET_FILTERS.find(f => f.id === tagLower);
+  if (customFilter) {
+    return {
+      label: customFilter.label.replace(/^[^\w\sа-яА-ЯёЁ]+/, '').trim(),
+      icon: customFilter.label.match(/^[^\w\sа-яА-ЯёЁ]+/)?.[0] || '🏷️',
+      class: tagLower
+    };
+  }
+
+  // Auto-format any custom tag
+  const formattedLabel = tagLower
+    .split('-')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+
+  return { label: formattedLabel, icon: '🏷️', class: tagLower.replace(/\s+/g, '-') };
 }
 
 // Filter and Render Menu grouped with Section Dividers
 function renderMenu() {
+  if (!menuGridContainer) return;
+
   let filtered = menuItemsState.filter(item => {
     const matchCategory = activeCategory === 'all' || item.category === activeCategory;
 
@@ -394,8 +421,8 @@ function renderMenu() {
   });
 
   const currentCatObj = CATEGORIES.find(c => c.id === activeCategory);
-  sectionTitleEl.textContent = currentCatObj ? currentCatObj.name : 'All Items';
-  itemCountEl.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''} available`;
+  if (sectionTitleEl) sectionTitleEl.textContent = currentCatObj ? currentCatObj.name : 'All Items';
+  if (itemCountEl) itemCountEl.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''} available`;
 
   if (filtered.length === 0) {
     menuGridContainer.innerHTML = `
@@ -441,6 +468,7 @@ function renderItemCardHTML(item) {
   const isOutOfStock = item.inStock === false;
   const isHH = isItemHappyHour(item);
   const displayPrice = getItemPrice(item);
+  const buttonLabel = modalBackdrop ? 'Customize & Add' : 'Add to Cart';
 
   return `
     <div class="menu-card ${isOutOfStock ? 'out-of-stock' : ''}" data-id="${item.id}">
@@ -454,9 +482,9 @@ function renderItemCardHTML(item) {
         <div class="card-badges">
           ${isHH ? `<span class="badge-tag happy-hour"><span>🎉</span> Happy Hour</span>` : ''}
           ${item.tags.map(tag => {
-    const b = getBadgeInfo(tag);
-    return `<span class="badge-tag ${b.class}"><span>${b.icon}</span> ${b.label}</span>`;
-  }).join('')}
+            const b = getBadgeInfo(tag);
+            return b ? `<span class="badge-tag ${b.class}"><span>${b.icon}</span> ${b.label}</span>` : '';
+          }).join('')}
         </div>
 
         ${isHH ? `
@@ -474,14 +502,13 @@ function renderItemCardHTML(item) {
         <p class="card-description">${item.description}</p>
         
         <div class="card-footer">
-          <span class="card-meta">${item.calories !== 'N/A' ? item.calories : 'Single Origin'}</span>
           ${isOutOfStock ? `
             <button class="btn-add-item out-of-stock-btn" disabled>
               Unavailable
             </button>
           ` : `
             <button class="btn-add-item" onclick="openItemModal('${item.id}')">
-              <span>+</span> Customize & Add
+              <span>+</span> ${buttonLabel}
             </button>
           `}
         </div>
@@ -490,9 +517,33 @@ function renderItemCardHTML(item) {
   `;
 }
 
+// Render Admin Category Filters in Drawer
+function renderAdminCategoryFilters() {
+  if (!adminCategoryFilters) return;
+  adminCategoryFilters.innerHTML = CATEGORIES.map(cat => `
+    <button class="admin-cat-tab ${cat.id === adminActiveCategory ? 'active' : ''}" onclick="setAdminCategory('${cat.id}')">
+      ${cat.icon} ${cat.name}
+    </button>
+  `).join('');
+}
+
+window.setAdminCategory = function (catId) {
+  adminActiveCategory = catId;
+  renderAdminCategoryFilters();
+  renderAdminItemsList();
+};
+
 // Render Admin Items Management List in Drawer
 function renderAdminItemsList() {
-  adminItemsList.innerHTML = menuItemsState.map(item => {
+  if (!adminItemsList) return;
+
+  const items = menuItemsState.filter(item => {
+    const matchCat = adminActiveCategory === 'all' || item.category === adminActiveCategory;
+    const matchQuery = !adminSearchQuery || item.name.toLowerCase().includes(adminSearchQuery);
+    return matchCat && matchQuery;
+  });
+
+  adminItemsList.innerHTML = items.map(item => {
     const isBestseller = item.tags.includes('bestseller');
     const isInStock = item.inStock !== false;
     const isInHH = happyHoursItems.has(item.id);
@@ -569,19 +620,49 @@ window.toggleItemHappyHour = function (itemId) {
   renderAdminItemsList();
 };
 
+// Fallback: Add directly to cart if modal is not present
+function addItemDirectlyToCart(item) {
+  const unitPrice = getItemPrice(item);
+  const cartItemId = item.id;
+  const existingIndex = cart.findIndex(ci => ci.cartItemId === cartItemId);
+
+  if (existingIndex > -1) {
+    cart[existingIndex].qty += 1;
+  } else {
+    cart.push({
+      cartItemId,
+      id: item.id,
+      name: item.name,
+      image: item.image,
+      optionsText: '',
+      unitPrice,
+      qty: 1
+    });
+  }
+
+  saveCartToStorage();
+  updateCartUI();
+  cartDrawer?.classList.add('open');
+}
+
 // Open Item Customization Modal
 window.openItemModal = function (itemId) {
   const item = menuItemsState.find(i => i.id === itemId);
   if (!item || item.inStock === false) return;
 
+  if (!modalBackdrop) {
+    addItemDirectlyToCart(item);
+    return;
+  }
+
   currentModalItem = item;
   currentModalQty = 1;
   selectedModalOptions = {};
-  modalQtyVal.textContent = 1;
+  if (modalQtyVal) modalQtyVal.textContent = 1;
 
-  modalImg.src = item.image;
-  modalTitle.textContent = item.name;
-  modalDesc.textContent = item.description;
+  if (modalImg) modalImg.src = item.image;
+  if (modalTitle) modalTitle.textContent = item.name;
+  if (modalDesc) modalDesc.textContent = item.description;
 
   // Build Options UI
   let optionsHTML = '';
@@ -624,7 +705,7 @@ window.openItemModal = function (itemId) {
     }
   }
 
-  modalOptionsContainer.innerHTML = optionsHTML;
+  if (modalOptionsContainer) modalOptionsContainer.innerHTML = optionsHTML;
   updateModalPrice();
   modalBackdrop.classList.add('active');
 };
@@ -640,14 +721,14 @@ window.handleOptionSelect = function (groupKey, index) {
 window.handleCheckboxSelect = function (groupKey) {
   const item = currentModalItem;
   const checkbox = document.querySelector(`input[name="opt-${groupKey}"]`);
-  if (item && item.options && item.options[groupKey]) {
+  if (item && item.options && item.options[groupKey] && checkbox) {
     selectedModalOptions[groupKey] = checkbox.checked ? item.options[groupKey] : null;
     updateModalPrice();
   }
 };
 
 function updateModalPrice() {
-  if (!currentModalItem) return;
+  if (!currentModalItem || !btnAddToCartConfirm) return;
   let unitPrice = getItemPrice(currentModalItem);
 
   for (const opt of Object.values(selectedModalOptions)) {
@@ -662,7 +743,7 @@ function updateModalPrice() {
 }
 
 function closeModal() {
-  modalBackdrop.classList.remove('active');
+  modalBackdrop?.classList.remove('active');
   currentModalItem = null;
 }
 
@@ -670,10 +751,14 @@ function closeModal() {
 function handleAddToCartFromModal() {
   if (!currentModalItem) return;
 
-  const optionsArr = [];
+  const optionsList = [];
+  const optionsKeyParts = [];
+
   for (const [key, val] of Object.entries(selectedModalOptions)) {
-    if (val && val.name && val.name !== 'Whole Milk' && val.name !== 'None' && val.name !== 'No Extra Protein' && val.name !== 'Standard') {
-      optionsArr.push(val.name);
+    if (val && val.name && val.name !== 'None' && val.name !== 'No Extra Protein') {
+      const priceText = val.price > 0 ? ` (+${CURRENCY}${val.price})` : '';
+      optionsList.push(`${val.name}${priceText}`);
+      optionsKeyParts.push(`${key}:${val.name}`);
     }
   }
 
@@ -682,7 +767,7 @@ function handleAddToCartFromModal() {
     if (opt && opt.price) unitPrice += opt.price;
   }
 
-  const cartItemId = currentModalItem.id + '-' + optionsArr.join('-').replace(/\s+/g, '');
+  const cartItemId = currentModalItem.id + '-' + optionsKeyParts.join('-').replace(/\s+/g, '');
   const existingIndex = cart.findIndex(ci => ci.cartItemId === cartItemId);
 
   if (existingIndex > -1) {
@@ -693,7 +778,7 @@ function handleAddToCartFromModal() {
       id: currentModalItem.id,
       name: currentModalItem.name,
       image: currentModalItem.image,
-      optionsText: optionsArr.join(', '),
+      optionsList: optionsList,
       unitPrice,
       qty: currentModalQty
     });
@@ -702,41 +787,54 @@ function handleAddToCartFromModal() {
   saveCartToStorage();
   updateCartUI();
   closeModal();
-  cartDrawer.classList.add('open');
+  cartDrawer?.classList.add('open');
 }
 
 function updateCartUI() {
   const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
   const totalPrice = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
 
-  cartCountBadge.textContent = totalCount;
-  cartTotalPriceEl.textContent = `${CURRENCY}${totalPrice}`;
+  if (cartCountBadge) cartCountBadge.textContent = totalCount;
+  if (cartTotalPriceEl) cartTotalPriceEl.textContent = `${CURRENCY}${totalPrice}`;
+
+  if (!cartItemsList) return;
 
   if (cart.length === 0) {
     cartItemsList.innerHTML = `
-      <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-        <p style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛍️</p>
-        <p>Your cart is currently empty.</p>
+      <div style="text-align: center; padding: 3rem 1.5rem; color: var(--text-muted);">
+        <p style="font-size: 2.5rem; margin-bottom: 0.5rem;">📋</p>
+        <p style="font-weight: 700; color: var(--brown-primary); margin-bottom: 4px;">No items selected</p>
+        <p style="font-size: 0.85rem; line-height: 1.4;">Add items from the menu above to calculate your estimated order total.</p>
       </div>
     `;
     return;
   }
 
-  cartItemsList.innerHTML = cart.map((item, index) => `
-    <div class="cart-item">
-      <img class="cart-item-img" src="${item.image}" alt="${item.name}" />
-      <div class="cart-item-info">
-        <div class="cart-item-title">${item.name}</div>
-        ${item.optionsText ? `<div class="cart-item-options">${item.optionsText}</div>` : ''}
-        <div class="cart-item-price">${CURRENCY}${item.unitPrice * item.qty}</div>
+  cartItemsList.innerHTML = cart.map((item, index) => {
+    const options = Array.isArray(item.optionsList) && item.optionsList.length > 0
+      ? item.optionsList
+      : (item.optionsText ? item.optionsText.split(', ').filter(Boolean) : []);
+
+    return `
+      <div class="cart-item">
+        <img class="cart-item-img" src="${item.image}" alt="${item.name}" />
+        <div class="cart-item-info">
+          <div class="cart-item-title">${item.name}</div>
+          ${options.length > 0 ? `
+            <ul class="cart-item-options-list">
+              ${options.map(opt => `<li>${opt}</li>`).join('')}
+            </ul>
+          ` : ''}
+          <div class="cart-item-price">${CURRENCY}${item.unitPrice * item.qty}</div>
+        </div>
+        <div class="quantity-control" style="padding: 2px 8px;">
+          <button class="btn-qty" onclick="changeCartQty(${index}, -1)">-</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="btn-qty" onclick="changeCartQty(${index}, 1)">+</button>
+        </div>
       </div>
-      <div class="quantity-control" style="padding: 2px 8px;">
-        <button class="btn-qty" onclick="changeCartQty(${index}, -1)">-</button>
-        <span class="qty-val">${item.qty}</span>
-        <button class="btn-qty" onclick="changeCartQty(${index}, 1)">+</button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 window.changeCartQty = function (index, delta) {
@@ -751,30 +849,15 @@ window.changeCartQty = function (index, delta) {
 };
 
 function handleCheckout() {
-  if (cart.length === 0) {
-    alert('Your basket is empty!');
-    return;
-  }
-
-  const orderTotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
-  const orderId = Math.floor(1000 + Math.random() * 9000);
-
-  alert(`🎉 Thank you for your order!
-
-Order #${orderId}
-Total Amount: ${CURRENCY}${orderTotal}
-
-Your order has been received. Please present this screen to the counter or await server delivery.`);
-
+  if (cart.length === 0) return;
   cart = [];
   saveCartToStorage();
   updateCartUI();
-  cartDrawer.classList.remove('open');
 }
 
 function saveCartToStorage() {
   try {
-    localStorage.setItem('velvet_cafe_cart', JSON.stringify(cart));
+    localStorage.setItem('famore_cafe_cart', JSON.stringify(cart));
   } catch (e) {
     console.error(e);
   }
@@ -782,7 +865,7 @@ function saveCartToStorage() {
 
 function loadCartFromStorage() {
   try {
-    const saved = localStorage.getItem('velvet_cafe_cart');
+    const saved = localStorage.getItem('famore_cafe_cart') || localStorage.getItem('velvet_cafe_cart');
     if (saved) cart = JSON.parse(saved);
   } catch (e) {
     cart = [];

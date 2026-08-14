@@ -17,8 +17,7 @@ window.CATEGORIES = [
 
 window.DIET_FILTERS = [
   { id: 'bestseller', label: '⭐ Best Seller' },
-  { id: 'vegan', label: '🌱 Vegan' },
-  { id: 'gluten-free', label: '🌾 Gluten Free' }
+  { id: 'vegan', label: '🌱 Vegan' }
 ];
 
 window.MENU_ITEMS = [
@@ -32,7 +31,6 @@ window.MENU_ITEMS = [
     image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80',
     tags: ['bestseller'],
     inStock: true,
-    calories: '150 kcal',
     options: {
       size: [
         { name: 'Medium', price: 0 },
@@ -56,7 +54,6 @@ window.MENU_ITEMS = [
     image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80',
     tags: ['bestseller'],
     inStock: true,
-    calories: '240 kcal',
     options: {
       size: [
         { name: 'Medium', price: 0 },
@@ -80,7 +77,6 @@ window.MENU_ITEMS = [
     image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80',
     tags: ['bestseller'],
     inStock: true,
-    calories: '10 kcal',
     options: {
       size: [
         { name: 'Medium', price: 0 },
@@ -97,64 +93,250 @@ window.MENU_ITEMS = [
   },
   {
     id: 'c4',
-    name: '🔴🔴🔴Lavender Honey Iced Latte',
+    name: 'Americano',
     category: 'coffee',
-    price: 0,
-    description: 'Espresso over cold oat milk infused with wild French lavender flowers and raw local wildflower honey.',
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80',
+    price: 13,
+    description: 'INFORMATION ABOUT AMERICANO',
+    image: 'https://www.foodandwine.com/thmb/k8YTwOlm3J86ejoVCsrvrgoA47g=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Partners-Americano-FT-BLOG0523-b8e18cc340574cc9bed536cceeec7082.jpg',
     tags: [],
     inStock: true,
-    calories: '180 kcal',
     options: {
       size: [
         { name: 'Medium', price: 0 },
         { name: 'Large', price: 2 }
       ],
       milk: [
-        { name: 'Oat Milk', price: 0 },
+        { name: "Without milk", price: 0 },
+        { name: 'Whole Milk', price: 2 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      Temperature: { name: 'Hot Milk', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c5',
+    name: 'Cold Americano',
+    category: 'coffee',
+    price: 12,
+    description: 'INFORMATION ABOUT AMERICANO',
+    image: 'https://skillstrainingcollege.com.au/wp-content/uploads/2024/11/cold-espresso-tonic-a-highball-glass-filled-with-2023-11-27-05-34-53-utc-2048x1365.jpg.webp',
+    tags: [],
+    inStock: true,
+    options: {
+      size: [
+        { name: 'Medium', price: 0 },
+        { name: 'Large', price: 1 }
+      ],
+      milk: [
+        { name: "Without milk", price: 0 },
+        { name: 'Whole Milk', price: 2 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      Temperature: { name: 'Hot Milk', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c6',
+    name: 'Espresso',
+    category: 'coffee',
+    price: 8,
+    description: 'INFORMATION ABOUT AMERICANO',
+    image: 'https://cdn.shopify.com/s/files/1/0601/8783/6659/files/Espresso-cup-with-coffee-beans.jpg?v=1655750550',
+    tags: [],
+    inStock: true,
+    options: {
+      size: [
+        { name: 'Short', price: 0 },
+        { name: 'Short double', price: 2 },
+        { name: 'Long', price: 0 },
+        { name: 'Long double', price: 2 }
+      ],
+      milk: [
+        { name: "Without milk", price: 0 },
+        { name: 'Whole Milk', price: 2 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      Temperature: { name: 'Hot Milk', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c7',
+    name: 'Flat White',
+    category: 'coffee',
+    price: 14,
+    description: 'Ristretto espresso shots poured over velvety textured micro-foam milk for an intense coffee flavor.',
+    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80',
+    tags: [],
+    inStock: true,
+    options: {
+      milk: [
         { name: 'Whole Milk', price: 0 },
-        { name: 'Almond Milk', price: 3 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ]
+    }
+  },
+  {
+    id: 'c8',
+    name: 'Macchiato',
+    category: 'coffee',
+    price: 14,
+    description: 'INFORMATION ABOUT AMERICANO',
+    image: 'https://img.bestrecipes.com.au/X1OxZDPR/br/2021/05/macchiato-unsplash-962590-1.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      milk: [
+        { name: 'Whole Milk', price: 0 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
         { name: 'Soy Milk', price: 2 }
       ],
       TakeAway: { name: 'Take Away', price: 0 }
     }
   },
   {
-    id: 'c5',
-    name: 'Flat White',
+    id: 'c9',
+    name: 'Cortado',
     category: 'coffee',
-    price: 17,
-    description: 'Ristretto espresso shots poured over velvety textured micro-foam milk for an intense coffee flavor.',
-    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80',
+    price: 14,
+    description: 'INFORMATION ABOUT AMERICANO',
+    image: 'https://eclairncafe.com/wp-content/uploads/2023/06/cafe-cortado.jpeg',
     tags: [],
     inStock: true,
-    calories: '120 kcal',
     options: {
       milk: [
         { name: 'Whole Milk', price: 0 },
-        { name: 'Oat Milk', price: 3 },
-        { name: 'Almond Milk', price: 3 }
-      ]
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
   {
-    id: 'c6',
+    id: 'c10',
+    name: 'Ice Tea',
+    category: 'coffee',
+    price: 12,
+    description: 'INFORMATION ABOUT drink',
+    image: 'https://hips.hearstapps.com/hmg-prod/images/delish-210419-iced-tea-02-landscape-jg-1619020612.jpg?crop=1.00xw:1.00xh;0,0',
+    tags: [],
+    inStock: true,
+    options: {
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c11',
     name: 'Ceremonial Grade Matcha Latte',
     category: 'coffee',
-    price: 23,
+    price: 19,
     description: 'Premium Japanese Uji ceremonial matcha whisked with warm oat milk and raw agave nectar.',
     image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'gluten-free'],
+    tags: ['bestseller'],
     inStock: true,
-    calories: '130 kcal',
     options: {
+      version: [
+        { name: 'First version', price: 0 },
+        { name: 'Second version', price: 1 },
+        { name: 'Third version', price: 2 }
+
+      ],
       milk: [
+        { name: 'Whole Milk', price: 0 },
         { name: 'Oat Milk', price: 0 },
         { name: 'Almond Milk', price: 0 },
         { name: 'Soy Milk', price: 0 }
-      ]
+      ],
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
+  {
+    id: 'c12',
+    name: 'Chocolate Cocao',
+    category: 'coffee',
+    price: 17,
+    description: 'INFORMATION ABOUT DRINK',
+    image: 'https://caroha.com/wp-content/uploads/2022/07/hot-cacao-recipe-3-1024x682.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      Temperature: [
+        { name: 'Hot', price: 0 },
+        { name: 'Cold', price: 1 }
+      ],
+      milk: [
+        { name: 'Whole Milk', price: 0 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c13',
+    name: 'Bumblebee',
+    category: 'coffee',
+    price: 18,
+    description: 'INFORMATION ABOUT DRINK',
+    image: 'https://espressobarista.com/wp-content/uploads/2025/01/cold-bumble-coffee-22-1140x570.webp',
+    tags: [],
+    inStock: true,
+    options: {
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c14',
+    name: 'Mont Blanc',
+    category: 'coffee',
+    price: 17,
+    description: 'INFORMATION ABOUT DRINK',
+    image: 'https://img.delicious.com.au/ANBn1MYQ/w759-h506-cfill/del/2025/03/mont-blanc-coffee-224835-1.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c15',
+    name: 'Cold Brew Coffee',
+    category: 'coffee',
+    price: 14,
+    description: 'INFORMATION ABOUT DRINK',
+    image: 'https://lifesimplified.gorenje.com/wp-content/uploads/2024/06/gorenje-blog-refreshing_cold_brew_coffee-1024x577.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      size: [
+        { name: 'Medium', price: 0 },
+        { name: 'Large', price: 2 }
+      ],
+      milk: [
+        { name: "Without milk", price: 0 },
+        { name: 'Whole Milk', price: 2 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      Temperature: { name: 'Hot Milk', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+
 
   // --- SALADS ---
   {
@@ -164,7 +346,7 @@ window.MENU_ITEMS = [
     price: 48,
     description: 'Warm crispy halloumi cheese, slow-roasted beets, baby arugula, toasted walnut crumble, and pomegranate balsamic vinaigrette.',
     image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian', 'gluten-free', 'bestseller'],
+    tags: ['bestseller'],
     inStock: true,
     calories: '420 kcal',
     options: {
@@ -182,7 +364,7 @@ window.MENU_ITEMS = [
     price: 46,
     description: 'Fluffy tri-color quinoa, English cucumbers, cherry tomatoes, Kalamata olives, chickpeas, fresh mint, and lemon tahini dressing.',
     image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'gluten-free'],
+    tags: ['vegan'],
     inStock: true,
     calories: '380 kcal',
     options: {
@@ -200,7 +382,7 @@ window.MENU_ITEMS = [
     price: 44,
     description: 'Sliced Haas avocado, ruby red grapefruit segments, baby spinach, shaved fennel, toasted pumpkin seeds, and citrus-herb dressing.',
     image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'gluten-free'],
+    tags: ['vegan'],
     inStock: true,
     calories: '320 kcal',
     options: {
@@ -255,7 +437,7 @@ window.MENU_ITEMS = [
     price: 38,
     description: 'Thick sourdough toast spread with mashed avocado, chili flakes, microgreens, organic poached egg, and zaatar oil.',
     image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian'],
+    tags: [],
     inStock: true,
     calories: '430 kcal',
     options: {
@@ -272,7 +454,7 @@ window.MENU_ITEMS = [
     price: 40,
     description: 'Seared halloumi cheese, roasted sweet peppers, black olive tapenade, fresh tomato, and mint leaves on pressed sourdough.',
     image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian'],
+    tags: [],
     inStock: true,
     calories: '520 kcal',
     options: {}
@@ -281,51 +463,65 @@ window.MENU_ITEMS = [
   // --- BAKERY & PASTRIES ---
   {
     id: 'p1',
-    name: 'French Butter Croissant',
+    name: 'Butter Croissant',
     category: 'pastries',
-    price: 14,
+    price: 16,
     description: 'Classic flaky, golden, layered French butter croissant baked fresh every morning.',
     image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian', 'bestseller'],
+    tags: ['bestseller'],
     inStock: true,
-    calories: '280 kcal',
-    options: {}
+    options: {
+      size: [
+        { name: 'Without', price: 0 },
+        { name: 'Butter', price: 2 },
+        { name: 'Jam', price: 2 },
+        { name: 'Butter & Jam', price: 4 }
+      ],
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
   },
   {
     id: 'p2',
-    name: 'Double Almond Croissant',
+    name: 'Pistachio Croissants',
     category: 'pastries',
     price: 18,
     description: 'Filled with rich almond frangipane cream, topped with toasted sliced almonds and dusted with powdered sugar.',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian', 'bestseller'],
+    image: 'https://i0.wp.com/loaves-and-such.com/wp-content/uploads/2024/10/Pistachio-Croissants.jpg?resize=750%2C495&ssl=1',
+    tags: ['bestseller'],
     inStock: true,
-    calories: '390 kcal',
-    options: {}
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
   },
   {
     id: 'p3',
-    name: 'Cardamom & Cinnamon Brioche Bun',
+    name: 'Raspberry Pastry',
     category: 'pastries',
-    price: 16,
-    description: 'Soft Swedish-style brioche knot infused with fragrant ground green cardamom seeds and caramelized Ceylon cinnamon butter.',
-    image: 'https://images.unsplash.com/photo-1583338917451-face2751d8d5?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian'],
+    price: 17,
+    description: 'IMFORMATION COMING SOON',
+    image: 'https://ashbaber.com/wp-content/uploads/2023/03/4-raspberry-and-almond-croissants-small.jpg',
+    tags: [],
     inStock: true,
-    calories: '340 kcal',
-    options: {}
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
   },
   {
     id: 'p4',
-    name: 'Pistachio Creme Danish',
+    name: 'Sinnabon',
     category: 'pastries',
     price: 20,
-    description: 'Flaky pastry nest filled with silky Sicilian pistachio pastry cream and topped with crushed bronte pistachios.',
-    image: 'https://images.unsplash.com/photo-1621236378699-8597faf6a145?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian'],
+    description: 'Information COMING SOON',
+    image: 'https://zira.uz/wp-content/uploads/2018/10/sinnabon-4.jpg',
+    tags: [],
     inStock: true,
-    calories: '410 kcal',
-    options: {}
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
   },
   {
     id: 'p5',
@@ -334,7 +530,7 @@ window.MENU_ITEMS = [
     price: 28,
     description: 'Caramelized crust on the outside with a lush, creamy center. Served with seasonal berry compote.',
     image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegetarian', 'gluten-free'],
+    tags: [],
     inStock: true,
     calories: '450 kcal',
     options: {}
@@ -348,7 +544,7 @@ window.MENU_ITEMS = [
     price: 58,
     description: 'Single Origin Whole Bean. Light Roast with vibrant floral jasmine notes, bergamot tea, and wild peach sweetness.',
     image: 'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'gluten-free', 'bestseller'],
+    tags: ['vegan', 'bestseller'],
     inStock: true,
     calories: 'N/A',
     options: {
@@ -371,7 +567,7 @@ window.MENU_ITEMS = [
     price: 54,
     description: 'Single Origin Whole Bean. Medium Roast featuring rich red apple acidity, dark caramel sweetness, and milk chocolate finish.',
     image: 'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'gluten-free'],
+    tags: ['vegan'],
     inStock: true,
     calories: 'N/A',
     options: {
@@ -393,7 +589,7 @@ window.MENU_ITEMS = [
     price: 48,
     description: 'Curated blend of Brazil Cerrado & Sumatra Mandheling. Medium-Dark Roast delivering intense cocoa notes, hazelnut, and thick crema.',
     image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'gluten-free', 'bestseller'],
+    tags: ['vegan', 'bestseller'],
     inStock: true,
     calories: 'N/A',
     options: {
