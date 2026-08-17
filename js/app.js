@@ -172,13 +172,22 @@ function isItemHappyHour(item) {
   return happyHoursActive && happyHoursItems.has(item.id);
 }
 
+// Utility: Debounce function for performance
+function debounce(func, wait = 150) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
 // Setup Event Listeners
 function setupEventListeners() {
-  // Search
-  searchInput?.addEventListener('input', (e) => {
+  // Search (Debounced to avoid rapid DOM re-renders)
+  searchInput?.addEventListener('input', debounce((e) => {
     searchQuery = e.target.value.toLowerCase().trim();
     renderMenu();
-  });
+  }, 120));
 
   // Protected Header Admin Access — always require PIN
   const attemptOpenAdmin = () => {
@@ -474,7 +483,7 @@ function renderItemCardHTML(item) {
   return `
     <div class="menu-card ${isOutOfStock ? 'out-of-stock' : ''}" data-id="${item.id}">
       <div class="card-img-wrapper">
-        <img class="card-img" src="${item.image}" alt="${item.name}" loading="lazy" />
+        <img class="card-img" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async" />
         <div class="card-overlay"></div>
 
         ${isOutOfStock ? `<div class="out-of-stock-banner">Sorry<br> Out of Stock</div>` : ''}

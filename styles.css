@@ -72,15 +72,25 @@ html {
 
 body {
   background-color: var(--bg-main);
-  background-image:
-    radial-gradient(circle at 10% 10%, rgba(138, 154, 100, 0.07) 0%, transparent 45%),
-    radial-gradient(circle at 90% 80%, rgba(74, 54, 43, 0.05) 0%, transparent 45%);
-  background-attachment: fixed;
   color: var(--text-main);
   font-family: var(--font-body);
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* GPU-accelerated fixed background without scroll paint penalty */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(138, 154, 100, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(74, 54, 43, 0.05) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: -1;
+  transform: translateZ(0);
 }
 
 /* Scrollbar */
@@ -113,12 +123,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250, 249, 245, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(250, 249, 245, 0.95);
   border-bottom: 1px solid var(--border-light);
   padding: 1.1rem 0;
   transition: var(--transition-normal);
+  transform: translateZ(0);
 }
 
 .header-inner {
@@ -592,6 +601,7 @@ body {
   align-items: flex-start;
   gap: 6px;
   z-index: 3;
+  pointer-events: none;
 }
 
 .badge-tag {
@@ -603,12 +613,11 @@ body {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.3px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   text-transform: uppercase;
-  background: rgba(138, 154, 100, 0.35);
+  background: rgba(138, 154, 100, 0.95);
   color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .badge-tag.bestseller {
@@ -635,6 +644,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+.badge-tag.special {
+  background: linear-gradient(135deg, #FF6B35, #E58E26);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 /* Menu Item Card */
 .menu-card {
   background: var(--bg-card);
@@ -643,9 +658,12 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: var(--transition-normal);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   position: relative;
   box-shadow: var(--shadow-main);
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 450px;
+  transform: translateZ(0);
 }
 
 .menu-card:hover {
@@ -687,17 +705,20 @@ body {
   height: 220px;
   overflow: hidden;
   background: #EAE6DF;
+  transform: translateZ(0);
 }
 
 .card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+  transition: transform 0.35s ease;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .menu-card:hover .card-img {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .card-overlay {
@@ -706,7 +727,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(45, 36, 30, 0.1) 0%, rgba(45, 36, 30, 0.45) 100%);
+  background: linear-gradient(to bottom, rgba(45, 36, 30, 0.08) 0%, rgba(45, 36, 30, 0.4) 100%);
+  pointer-events: none;
 }
 
 .price-tag {
@@ -1013,35 +1035,20 @@ body {
 
 /* --- HAPPY HOURS BANNER --- */
 .happy-hours-banner {
-  background: linear-gradient(135deg, #FF6B35, #F7C948, #FF6B35);
-  background-size: 200% 200%;
-  animation: happyHoursGradient 3s ease infinite;
+  background: linear-gradient(135deg, #FF6B35, #E58E26);
   padding: 12px 0;
   text-align: center;
   display: none;
   position: sticky;
   top: 70px;
   z-index: 99;
-  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.35);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.25);
+  transform: translateZ(0);
 }
 
 .happy-hours-banner.active {
   display: block;
-  animation: happyHoursGradient 3s ease infinite, slideDown 0.4s ease-out;
-}
-
-@keyframes happyHoursGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+  animation: slideDown 0.3s ease-out;
 }
 
 @keyframes slideDown {
@@ -1065,19 +1072,6 @@ body {
 
 .hh-icon {
   font-size: 1.3rem;
-  animation: bounce 1s ease infinite;
-}
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-4px);
-  }
 }
 
 .hh-text {
@@ -1085,32 +1079,20 @@ body {
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.3px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 /* Happy Hours Price Display */
 .price-tag.happy-hour-price {
-  background: linear-gradient(135deg, #FF6B35, #F7C948);
+  background: linear-gradient(135deg, #FF6B35, #E58E26);
   border-color: #FF6B35;
   color: #FFFFFF;
-  animation: priceGlow 2s ease-in-out infinite;
-}
-
-@keyframes priceGlow {
-
-  0%,
-  100% {
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-  }
-
-  50% {
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.55);
-  }
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.35);
 }
 
 .price-original {
   text-decoration: line-through;
-  opacity: 0.7;
+  opacity: 0.75;
   font-size: 0.9rem;
   margin-right: 4px;
 }
@@ -1121,10 +1103,10 @@ body {
 
 /* Happy Hour Badge on Cards */
 .badge-tag.happy-hour {
-  background: linear-gradient(135deg, #FF6B35, #F7C948);
+  background: linear-gradient(135deg, #FF6B35, #E58E26);
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  animation: badgePulse 2s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
 }
 
 @keyframes badgePulse {
