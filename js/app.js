@@ -83,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Load menu state (with localStorage overrides for inStock status)
+// NOTE: inStock: false in data.js is always respected as the source of truth.
+// Overrides from localStorage only apply to items that are marked inStock: true in data.js.
 function loadMenuState() {
   menuItemsState = JSON.parse(JSON.stringify(MENU_ITEMS)); // Deep clone defaults from data.js
   try {
@@ -90,7 +92,10 @@ function loadMenuState() {
     if (savedOverrides) {
       const overrides = JSON.parse(savedOverrides);
       menuItemsState.forEach(item => {
-        if (overrides[item.id]) {
+        // Only apply override if item is IN stock by default in data.js
+        // This prevents stale cache from overriding intentional out-of-stock items
+        const originalItem = MENU_ITEMS.find(m => m.id === item.id);
+        if (overrides[item.id] && originalItem && originalItem.inStock !== false) {
           if (typeof overrides[item.id].inStock === 'boolean') {
             item.inStock = overrides[item.id].inStock;
           }
