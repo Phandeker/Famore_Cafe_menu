@@ -17,13 +17,42 @@ window.CATEGORIES = [
 
 window.DIET_FILTERS = [
   { id: 'bestseller', label: '⭐ Best Seller' },
-  { id: 'vegan', label: '🌱 Vegan' }
+  { id: 'vegan', label: '🌱 Vegan' },
+  { id: 'special', label: '🎉 Special' }
 ];
 
 window.MENU_ITEMS = [
   // --- COFFEE & DRINKS ---
   {
     id: 'c1',
+    name: 'Espresso',
+    category: 'coffee',
+    price: 8,
+    description: 'INFORMATION ABOUT AMERICANO',
+    image: 'https://cdn.shopify.com/s/files/1/0601/8783/6659/files/Espresso-cup-with-coffee-beans.jpg?v=1655750550',
+    tags: ['bestseller'],
+    inStock: true,
+    options: {
+      size: [
+        { name: 'Short', price: 0 },
+        { name: 'Short double', price: 2 },
+        { name: 'Long', price: 0 },
+        { name: 'Long double', price: 2 }
+      ],
+      milk: [
+        { name: "Without milk", price: 0 },
+        { name: 'Whole Milk', price: 2 },
+        { name: 'Oat Milk', price: 2 },
+        { name: 'Almond Milk', price: 2 },
+        { name: 'Soy Milk', price: 2 }
+      ],
+      TakeAway: { name: 'Take Away', price: 0 },
+      Ice: { name: 'Ice', price: 0 },
+      Temperature: { name: 'Hot Milk', price: 0 },
+    }
+  },
+  {
+    id: 'c2',
     name: 'Cappuccino',
     category: 'coffee',
     price: 14,
@@ -46,7 +75,7 @@ window.MENU_ITEMS = [
     }
   },
   {
-    id: 'c2',
+    id: 'c6',
     name: 'Latte',
     category: 'coffee',
     price: 14,
@@ -129,33 +158,6 @@ window.MENU_ITEMS = [
       size: [
         { name: 'Medium', price: 0 },
         { name: 'Large', price: 1 }
-      ],
-      milk: [
-        { name: "Without milk", price: 0 },
-        { name: 'Whole Milk', price: 2 },
-        { name: 'Oat Milk', price: 2 },
-        { name: 'Almond Milk', price: 2 },
-        { name: 'Soy Milk', price: 2 }
-      ],
-      Temperature: { name: 'Hot Milk', price: 0 },
-      TakeAway: { name: 'Take Away', price: 0 }
-    }
-  },
-  {
-    id: 'c6',
-    name: 'Espresso',
-    category: 'coffee',
-    price: 8,
-    description: 'INFORMATION ABOUT AMERICANO',
-    image: 'https://cdn.shopify.com/s/files/1/0601/8783/6659/files/Espresso-cup-with-coffee-beans.jpg?v=1655750550',
-    tags: [],
-    inStock: true,
-    options: {
-      size: [
-        { name: 'Short', price: 0 },
-        { name: 'Short double', price: 2 },
-        { name: 'Long', price: 0 },
-        { name: 'Long double', price: 2 }
       ],
       milk: [
         { name: "Without milk", price: 0 },
@@ -292,7 +294,7 @@ window.MENU_ITEMS = [
     price: 18,
     description: 'INFORMATION ABOUT DRINK',
     image: 'https://espressobarista.com/wp-content/uploads/2025/01/cold-bumble-coffee-22-1140x570.webp',
-    tags: [],
+    tags: ['special'],
     inStock: true,
     options: {
       TakeAway: { name: 'Take Away', price: 0 }
@@ -336,128 +338,150 @@ window.MENU_ITEMS = [
       TakeAway: { name: 'Take Away', price: 0 }
     }
   },
+  {
+    id: 'c16',
+    name: 'Orange Juice',
+    category: 'coffee',
+    price: 15,
+    description: 'Freshly squeezed orange juice.',
+    image: 'https://hips.hearstapps.com/hmg-prod/images/orange-juice-royalty-free-image-1745609809.pjpeg?crop=1xw:0.84375xh;center,top&resize=1200:*',
+    tags: [],
+    inStock: true,
+    options: {
+      size: [
+        { name: 'Medium', price: 0 },
+        { name: 'Large', price: 3 }
+      ],
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'c17',
+    name: 'Bottle of Soda',
+    category: 'coffee',
+    price: 11,
+    description: 'Bottle of Soda | 275ml',
+    image: 'https://res.cloudinary.com/shufersal/image/upload/f_auto,q_auto/v1551800922/prod/product_images/products_zoom/OOY30_Z_P_8464611_2.png',
+    tags: [],
+    inStock: true,
+    options: {}
+  },
 
 
   // --- SALADS ---
   {
     id: 's1',
-    name: 'Grilled Halloumi & Roasted Beet Salad',
+    name: 'Burrata Salad',
     category: 'salads',
-    price: 48,
-    description: 'Warm crispy halloumi cheese, slow-roasted beets, baby arugula, toasted walnut crumble, and pomegranate balsamic vinaigrette.',
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80',
-    tags: ['bestseller'],
-    inStock: true,
-    calories: '420 kcal',
+    price: 23,
+    description: 'Fresh burrata cheese, cherry tomatoes, fresh basil, olive oil, and balsamic glaze.',
+    image: 'https://static01.nyt.com/images/2025/08/29/multimedia/hm-tomato-and-burrata-salad-with-chile-crisp-qjhc/hm-tomato-and-burrata-salad-with-chile-crisp-qjhc-superJumbo.jpg?format=pjpg&quality=75&auto=webp&disable=upscale',
+    tags: [],
+    inStock: false,
     options: {
-      protein: [
-        { name: 'No Extra Protein', price: 0 },
-        { name: 'Add Grilled Chicken Breast', price: 16 },
-        { name: 'Add Avocado', price: 8 }
-      ]
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
   {
     id: 's2',
-    name: 'Mediterranean Superfood Quinoa Bowl',
+    name: 'Tofu Salad',
     category: 'salads',
-    price: 46,
-    description: 'Fluffy tri-color quinoa, English cucumbers, cherry tomatoes, Kalamata olives, chickpeas, fresh mint, and lemon tahini dressing.',
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
+    price: 23,
+    description: 'Tofu, cherry tomatoes, fresh basil, olive oil, and balsamic glaze.',
+    image: 'https://www.ellielikes.cooking/wp-content/uploads/2024/11/silken-tofu-salad-7-682x1024.jpg',
     tags: ['vegan'],
-    inStock: true,
-    calories: '380 kcal',
+    inStock: false,
     options: {
-      protein: [
-        { name: 'Standard', price: 0 },
-        { name: 'Add Crumbled Feta', price: 6 },
-        { name: 'Add Grilled Halloumi', price: 12 }
-      ]
-    }
-  },
-  {
-    id: 's3',
-    name: 'Avocado & Citrus Salad',
-    category: 'salads',
-    price: 44,
-    description: 'Sliced Haas avocado, ruby red grapefruit segments, baby spinach, shaved fennel, toasted pumpkin seeds, and citrus-herb dressing.',
-    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan'],
-    inStock: true,
-    calories: '320 kcal',
-    options: {
-      dressing: [
-        { name: 'Citrus Herb Vinaigrette', price: 0 },
-        { name: 'Tahini Dressing', price: 0 }
-      ]
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
 
   // --- SANDWICHES ---
   {
     id: 'sw1',
-    name: 'Smoked Salmon & Everything Bagel',
+    name: 'Beef Sandwich',
     category: 'sandwiches',
-    price: 42,
-    description: 'Fresh toasted artisan bagel, Norwegian smoked salmon, dill whipped cream cheese, capers, pickled red onions, and fresh cucumbers.',
-    image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80',
-    tags: ['bestseller'],
+    price: 39,
+    description: 'Smoked beef slices, horseradish sauce, fresh arugula, and caramelized onion on croissant.',
+    image: 'https://teatimemagazine.com/wp-content/uploads/2021/03/Roast-Beef-Tea-Sandwiches-with-Red-Onion-Marmalade-.jpeg',
+    tags: [],
     inStock: true,
-    calories: '510 kcal',
     options: {
-      bread: [
-        { name: 'Everything Bagel', price: 0 },
-        { name: 'Sesame Bagel', price: 0 },
-        { name: 'Gluten-Free Bread', price: 5 }
-      ]
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
   {
     id: 'sw2',
-    name: 'Roasted Turkey & Basil Pesto Focaccia',
+    name: 'Bacon Croissant',
     category: 'sandwiches',
-    price: 44,
-    description: 'Oven-roasted turkey breast, fresh mozzarella, house basil pesto, sun-dried tomatoes, and wild rocket on warm garlic olive oil focaccia.',
-    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80',
-    tags: ['bestseller'],
+    price: 32,
+    description: 'Warm croissant with bacon and cheese.',
+    image: 'https://www.dontgobaconmyheart.co.uk/wp-content/uploads/2020/03/filled-croissant-with-bacon-brie-blackberry.jpg',
+    tags: [],
     inStock: true,
-    calories: '580 kcal',
     options: {
-      cheese: [
-        { name: 'Mozzarella', price: 0 },
-        { name: 'Extra Mozzarella', price: 6 },
-        { name: 'Dairy-Free Cheese', price: 4 }
-      ]
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
   {
     id: 'sw3',
-    name: 'Avocado & Poached Egg Toast',
+    name: 'Salmon Croissant',
     category: 'sandwiches',
-    price: 38,
-    description: 'Thick sourdough toast spread with mashed avocado, chili flakes, microgreens, organic poached egg, and zaatar oil.',
-    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
+    price: 39,
+    description: 'Croissant with salmon cream cheese and fresh dill.',
+    image: 'https://media02.stockfood.com/largepreviews/NDI1OTkyNzkz/13741703-Croissant-with-smoked-salmon-cream-cheese-and-dill.jpg',
     tags: [],
     inStock: true,
-    calories: '430 kcal',
     options: {
-      egg: [
-        { name: '1 Poached Egg', price: 0 },
-        { name: '2 Poached Eggs', price: 6 }
-      ]
+      TakeAway: { name: 'Take Away', price: 0 }
     }
   },
   {
     id: 'sw4',
-    name: 'Grilled Halloumi & Olive Tapenade Sourdough',
+    name: 'Croissant with Brie',
     category: 'sandwiches',
-    price: 40,
-    description: 'Seared halloumi cheese, roasted sweet peppers, black olive tapenade, fresh tomato, and mint leaves on pressed sourdough.',
-    image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80',
+    price: 39,
+    description: 'Croissant with brie cheese and figs.',
+    image: 'https://thumbs.dreamstime.com/b/fresh-croissant-sandwich-brie-cheese-arugula-figs-delicious-breakfast-tasty-food-fresh-croissant-sandwich-brie-129249621.jpg',
     tags: [],
     inStock: true,
-    calories: '520 kcal',
-    options: {}
+    options: {
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'sw5',
+    name: 'Barbecue Turkey Focaccia',
+    category: 'sandwiches',
+    price: 20,
+    description: 'Smoked turkey breast, barbecue sauce, caramelized onions and fresh mozzarella on warm garlic olive oil focaccia.',
+    image: 'https://substackcdn.com/image/fetch/$s_!LW3Z!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F35639a1a-471f-4e41-b205-42b1502dafd7_800x1080.png',
+    tags: [],
+    inStock: true,
+    options: {
+      Size: [
+        { name: 'Medium', price: 0 },
+        { name: 'Large', price: 19 }
+      ],
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'sw6',
+    name: 'Focaccia with Tofu',
+    category: 'sandwiches',
+    price: 20,
+    description: 'Warm focaccia with tofu, avocado, and fresh vegetables.',
+    image: 'https://browngirlveganeats.com/wp-content/uploads/2025/06/IMG_9575.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      Size: [
+        { name: 'Medium', price: 0 },
+        { name: 'Large', price: 19 }
+      ],
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
   },
 
   // --- BAKERY & PASTRIES ---
@@ -500,7 +524,7 @@ window.MENU_ITEMS = [
     name: 'Raspberry Pastry',
     category: 'pastries',
     price: 17,
-    description: 'IMFORMATION COMING SOON',
+    description: 'Flaky pastry filled with rich raspberry jam.',
     image: 'https://ashbaber.com/wp-content/uploads/2023/03/4-raspberry-and-almond-croissants-small.jpg',
     tags: [],
     inStock: true,
@@ -514,7 +538,7 @@ window.MENU_ITEMS = [
     name: 'Sinnabon',
     category: 'pastries',
     price: 20,
-    description: 'Information COMING SOON',
+    description: 'Classic cinnamon roll made with premium cinnamon and drizzled with cream cheese frosting.',
     image: 'https://zira.uz/wp-content/uploads/2018/10/sinnabon-4.jpg',
     tags: [],
     inStock: true,
@@ -525,83 +549,117 @@ window.MENU_ITEMS = [
   },
   {
     id: 'p5',
-    name: 'Basque Burnt Cheesecake Slice',
+    name: 'Banana Muffin',
     category: 'pastries',
-    price: 28,
-    description: 'Caramelized crust on the outside with a lush, creamy center. Served with seasonal berry compote.',
-    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
+    price: 14,
+    description: 'Soft banana muffin with chocolate chips.',
+    image: 'https://noshingwiththenolands.com/wp-content/uploads/2022/08/Chocolate-Chip-Banana-Muffins-horizontal-on-a-cooling-rack-5-Custom-680x453.jpg',
     tags: [],
     inStock: true,
-    calories: '450 kcal',
-    options: {}
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'p6',
+    name: 'Chocolate Cookie',
+    category: 'pastries',
+    price: 11,
+    description: 'Classic cookie with chocolate chips.',
+    image: 'https://sp-ao.shortpixel.ai/client/to_webp,q_lossless,ret_img,w_1707/https://www.thepalatablelife.com/wp-content/uploads/2025/03/classic-chocolate-chip-cookies-2-scaled.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'p7',
+    name: 'Matcha Cookie',
+    category: 'pastries',
+    price: 11,
+    description: 'Matcha cookies with white chocolate chips.',
+    image: 'https://www.savorysweetspoon.com/wp-content/uploads/2023/03/Matcha-White-Chocolate-Cookies-2-960x1200.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'p8',
+    name: 'Pekan Cookie',
+    category: 'pastries',
+    price: 11,
+    description: 'Classic cookie with pecan.',
+    image: 'https://crisco.com/wp-content/uploads/2025/07/Toasted-Pecan-Cookies-9-scaled.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
+  },
+  {
+    id: 'p9',
+    name: 'Carrot Cake',
+    category: 'pastries',
+    price: 16,
+    description: 'Classic Carrot Cake with nuts.',
+    image: 'https://healthynibblesandbits.com/wp-content/uploads/2016/02/Carrot-Zucchini-Cake-9-624x935.jpg',
+    tags: [],
+    inStock: true,
+    options: {
+      Warm: { name: 'Heat Up', price: 0 },
+      TakeAway: { name: 'Take Away', price: 0 }
+    }
   },
 
   // --- COFFEE BEANS ---
   {
     id: 'b1',
-    name: 'Ethiopia Yirgacheffe (250g)',
+    name: 'Brewkva (1kg)',
     category: 'beans',
-    price: 58,
+    price: 95,
     description: 'Single Origin Whole Bean. Light Roast with vibrant floral jasmine notes, bergamot tea, and wild peach sweetness.',
-    image: 'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'bestseller'],
+    image: 'https://static.tildacdn.net/tild6530-3731-4163-a562-373538346333/logo.png',
+    tags: [],
     inStock: true,
-    calories: 'N/A',
     options: {
       grind: [
         { name: 'Whole Bean', price: 0 },
         { name: 'Espresso Grind', price: 0 },
-        { name: 'Filter / Pour-Over Grind', price: 0 },
-        { name: 'French Press Grind', price: 0 }
+        // { name: 'Filter / Pour-Over Grind', price: 0 },
+        // { name: 'French Press Grind', price: 0 }
       ],
-      weight: [
-        { name: '250g Bag', price: 0 },
-        { name: '1kg Bag', price: 95 }
-      ]
+      // weight: [
+      //   { name: '250g Bag', price: 0 },
+      //   { name: '1kg Bag', price: 95 }
+      // ]
     }
   },
   {
     id: 'b2',
-    name: 'Colombia Huila Reserve (250g)',
+    name: 'Briosso (1kg)',
     category: 'beans',
-    price: 54,
+    price: 120,
     description: 'Single Origin Whole Bean. Medium Roast featuring rich red apple acidity, dark caramel sweetness, and milk chocolate finish.',
-    image: 'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=800&q=80',
+    image: 'https://d3m9l0v76dty0.cloudfront.net/system/photos/6432499/large/e583fb4dc8e420bbfa3949b2bc8ef697.jpg',
     tags: ['vegan'],
     inStock: true,
-    calories: 'N/A',
     options: {
       grind: [
         { name: 'Whole Bean', price: 0 },
         { name: 'Espresso Grind', price: 0 },
-        { name: 'Filter / Pour-Over Grind', price: 0 }
+        // { name: 'Filter / Pour-Over Grind', price: 0 }
       ],
-      weight: [
-        { name: '250g Bag', price: 0 },
-        { name: '1kg Bag', price: 90 }
-      ]
+      // weight: [
+      //   { name: '250g Bag', price: 0 },
+      //   { name: '1kg Bag', price: 90 }
+      // ]
     }
   },
-  {
-    id: 'b3',
-    name: 'Signature Velvet House Blend (250g)',
-    category: 'beans',
-    price: 48,
-    description: 'Curated blend of Brazil Cerrado & Sumatra Mandheling. Medium-Dark Roast delivering intense cocoa notes, hazelnut, and thick crema.',
-    image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80',
-    tags: ['vegan', 'bestseller'],
-    inStock: true,
-    calories: 'N/A',
-    options: {
-      grind: [
-        { name: 'Whole Bean', price: 0 },
-        { name: 'Espresso Grind', price: 0 },
-        { name: 'Filter / Pour-Over Grind', price: 0 }
-      ],
-      weight: [
-        { name: '250g Bag', price: 0 },
-        { name: '1kg Bag', price: 80 }
-      ]
-    }
-  }
 ];

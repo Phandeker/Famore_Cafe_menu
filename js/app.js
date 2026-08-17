@@ -350,7 +350,8 @@ function getBadgeInfo(tag) {
     'spicy': { label: 'Spicy', icon: '🌶️', class: 'spicy' },
     'new': { label: 'New', icon: '✨', class: 'new' },
     'organic': { label: 'Organic', icon: '🍃', class: 'organic' },
-    'sugar-free': { label: 'Sugar-Free', icon: '🍃', class: 'sugar-free' }
+    'sugar-free': { label: 'Sugar-Free', icon: '🍃', class: 'sugar-free' },
+    'special': { label: 'Special', icon: '🎉', class: 'special' }
   };
 
   if (knownBadges[tagLower]) {
@@ -482,9 +483,9 @@ function renderItemCardHTML(item) {
         <div class="card-badges">
           ${isHH ? `<span class="badge-tag happy-hour"><span>🎉</span> Happy Hour</span>` : ''}
           ${item.tags.map(tag => {
-            const b = getBadgeInfo(tag);
-            return b ? `<span class="badge-tag ${b.class}"><span>${b.icon}</span> ${b.label}</span>` : '';
-          }).join('')}
+    const b = getBadgeInfo(tag);
+    return b ? `<span class="badge-tag ${b.class}"><span>${b.icon}</span> ${b.label}</span>` : '';
+  }).join('')}
         </div>
 
         ${isHH ? `
