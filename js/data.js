@@ -28,8 +28,8 @@ window.MENU_ITEMS = [
     name: 'Espresso',
     category: 'coffee',
     price: 8,
-    description: 'INFORMATION ABOUT AMERICANO',
-    image: 'https://cdn.shopify.com/s/files/1/0601/8783/6659/files/Espresso-cup-with-coffee-beans.jpg?v=1655750550',
+    description: 'Rich and intense single-origin espresso shot.',
+    image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -57,7 +57,7 @@ window.MENU_ITEMS = [
     category: 'coffee',
     price: 14,
     description: 'Double shot of signature Ethiopian espresso blended with silky micro-foam steamed milk.',
-    image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -80,7 +80,7 @@ window.MENU_ITEMS = [
     category: 'coffee',
     price: 14,
     description: 'Espresso infused with house-made sweetened condensed milk, Madagascar vanilla, and caramel drizzle.',
-    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -103,7 +103,7 @@ window.MENU_ITEMS = [
     category: 'coffee',
     price: 16,
     description: 'Slow-steeped for 20 hours using single-origin Guatemalan beans. Smooth, chocolatey, and crisp over ice.',
-    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -125,8 +125,8 @@ window.MENU_ITEMS = [
     name: 'Americano',
     category: 'coffee',
     price: 13,
-    description: 'INFORMATION ABOUT AMERICANO',
-    image: 'https://www.foodandwine.com/thmb/k8YTwOlm3J86ejoVCsrvrgoA47g=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Partners-Americano-FT-BLOG0523-b8e18cc340574cc9bed536cceeec7082.jpg',
+    description: 'Espresso diluted with hot water for a smooth, rich cup.',
+    image: 'https://images.unsplash.com/photo-1551030173-122aabc4489c?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -150,8 +150,8 @@ window.MENU_ITEMS = [
     name: 'Cold Americano',
     category: 'coffee',
     price: 12,
-    description: 'INFORMATION ABOUT AMERICANO',
-    image: 'https://skillstrainingcollege.com.au/wp-content/uploads/2024/11/cold-espresso-tonic-a-highball-glass-filled-with-2023-11-27-05-34-53-utc-2048x1365.jpg.webp',
+    description: 'Espresso served over iced cold water and ice cubes.',
+    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -176,7 +176,7 @@ window.MENU_ITEMS = [
     category: 'coffee',
     price: 14,
     description: 'Ristretto espresso shots poured over velvety textured micro-foam milk for an intense coffee flavor.',
-    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -193,8 +193,8 @@ window.MENU_ITEMS = [
     name: 'Macchiato',
     category: 'coffee',
     price: 14,
-    description: 'INFORMATION ABOUT AMERICANO',
-    image: 'https://img.bestrecipes.com.au/X1OxZDPR/br/2021/05/macchiato-unsplash-962590-1.jpg',
+    description: 'Espresso topped with a delicate dollop of steamed milk foam.',
+    image: 'https://images.unsplash.com/photo-1557006021-b85faa2bc5e2?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -212,8 +212,8 @@ window.MENU_ITEMS = [
     name: 'Cortado',
     category: 'coffee',
     price: 14,
-    description: 'INFORMATION ABOUT AMERICANO',
-    image: 'https://eclairncafe.com/wp-content/uploads/2023/06/cafe-cortado.jpeg',
+    description: 'Equal parts rich espresso and warm steamed milk.',
+    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -231,8 +231,8 @@ window.MENU_ITEMS = [
     name: 'Ice Tea',
     category: 'coffee',
     price: 12,
-    description: 'INFORMATION ABOUT drink',
-    image: 'https://hips.hearstapps.com/hmg-prod/images/delish-210419-iced-tea-02-landscape-jg-1619020612.jpg?crop=1.00xw:1.00xh;0,0',
+    description: 'Refreshing brewed artisan herbal and fruit iced tea.',
+    image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -245,7 +245,7 @@ window.MENU_ITEMS = [
     category: 'coffee',
     price: 19,
     description: 'Premium Japanese Uji ceremonial matcha whisked with warm oat milk and raw agave nectar.',
-    image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -253,7 +253,6 @@ window.MENU_ITEMS = [
         { name: 'First version', price: 0 },
         { name: 'Second version', price: 1 },
         { name: 'Third version', price: 2 }
-
       ],
       milk: [
         { name: 'Whole Milk', price: 0 },
@@ -269,8 +268,8 @@ window.MENU_ITEMS = [
     name: 'Chocolate Cocao',
     category: 'coffee',
     price: 17,
-    description: 'INFORMATION ABOUT DRINK',
-    image: 'https://caroha.com/wp-content/uploads/2022/07/hot-cacao-recipe-3-1024x682.jpg',
+    description: 'Rich Belgian chocolate blend with steamed milk and cocoa dusting.',
+    image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -292,8 +291,8 @@ window.MENU_ITEMS = [
     name: 'Bumblebee',
     category: 'coffee',
     price: 18,
-    description: 'INFORMATION ABOUT DRINK',
-    image: 'https://espressobarista.com/wp-content/uploads/2025/01/cold-bumble-coffee-22-1140x570.webp',
+    description: 'Layered espresso with freshly squeezed orange juice and caramel syrup.',
+    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=75',
     tags: ['special'],
     inStock: true,
     options: {
@@ -305,8 +304,8 @@ window.MENU_ITEMS = [
     name: 'Mont Blanc',
     category: 'coffee',
     price: 17,
-    description: 'INFORMATION ABOUT DRINK',
-    image: 'https://img.delicious.com.au/ANBn1MYQ/w759-h506-cfill/del/2025/03/mont-blanc-coffee-224835-1.jpg',
+    description: 'Iced espresso topped with thick whipped cream and grated chocolate.',
+    image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -318,8 +317,8 @@ window.MENU_ITEMS = [
     name: 'Cold Brew Coffee',
     category: 'coffee',
     price: 14,
-    description: 'INFORMATION ABOUT DRINK',
-    image: 'https://lifesimplified.gorenje.com/wp-content/uploads/2024/06/gorenje-blog-refreshing_cold_brew_coffee-1024x577.jpg',
+    description: 'Slow cold-steeped artisan single-origin brew over ice.',
+    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -344,7 +343,7 @@ window.MENU_ITEMS = [
     category: 'coffee',
     price: 15,
     description: 'Freshly squeezed orange juice.',
-    image: 'https://hips.hearstapps.com/hmg-prod/images/orange-juice-royalty-free-image-1745609809.pjpeg?crop=1xw:0.84375xh;center,top&resize=1200:*',
+    image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -360,13 +359,12 @@ window.MENU_ITEMS = [
     name: 'Bottle of Soda',
     category: 'coffee',
     price: 11,
-    description: 'Bottle of Soda | 275ml',
-    image: 'https://res.cloudinary.com/shufersal/image/upload/f_auto,q_auto/v1551800922/prod/product_images/products_zoom/OOY30_Z_P_8464611_2.png',
+    description: 'Sparkling Mineral Soda | 275ml',
+    image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {}
   },
-
 
   // --- SALADS ---
   {
@@ -375,7 +373,7 @@ window.MENU_ITEMS = [
     category: 'salads',
     price: 23,
     description: 'Fresh burrata cheese, cherry tomatoes, fresh basil, olive oil, and balsamic glaze.',
-    image: 'https://static01.nyt.com/images/2025/08/29/multimedia/hm-tomato-and-burrata-salad-with-chile-crisp-qjhc/hm-tomato-and-burrata-salad-with-chile-crisp-qjhc-superJumbo.jpg?format=pjpg&quality=75&auto=webp&disable=upscale',
+    image: 'https://images.unsplash.com/photo-1592417817098-8f3d69109853?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: false,
     options: {
@@ -388,7 +386,7 @@ window.MENU_ITEMS = [
     category: 'salads',
     price: 23,
     description: 'Tofu, cherry tomatoes, fresh basil, olive oil, and balsamic glaze.',
-    image: 'https://www.ellielikes.cooking/wp-content/uploads/2024/11/silken-tofu-salad-7-682x1024.jpg',
+    image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=75',
     tags: ['vegan'],
     inStock: false,
     options: {
@@ -403,7 +401,7 @@ window.MENU_ITEMS = [
     category: 'sandwiches',
     price: 39,
     description: 'Smoked beef slices, horseradish sauce, fresh arugula, and caramelized onion on croissant.',
-    image: 'https://teatimemagazine.com/wp-content/uploads/2021/03/Roast-Beef-Tea-Sandwiches-with-Red-Onion-Marmalade-.jpeg',
+    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -415,8 +413,8 @@ window.MENU_ITEMS = [
     name: 'Bacon Croissant',
     category: 'sandwiches',
     price: 32,
-    description: 'Warm croissant with bacon and cheese.',
-    image: 'https://www.dontgobaconmyheart.co.uk/wp-content/uploads/2020/03/filled-croissant-with-bacon-brie-blackberry.jpg',
+    description: 'Warm croissant with crispy bacon and melted cheese.',
+    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -428,8 +426,8 @@ window.MENU_ITEMS = [
     name: 'Salmon Croissant',
     category: 'sandwiches',
     price: 39,
-    description: 'Croissant with salmon cream cheese and fresh dill.',
-    image: 'https://media02.stockfood.com/largepreviews/NDI1OTkyNzkz/13741703-Croissant-with-smoked-salmon-cream-cheese-and-dill.jpg',
+    description: 'Flaky croissant with Norwegian smoked salmon, cream cheese, and fresh dill.',
+    image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -441,8 +439,8 @@ window.MENU_ITEMS = [
     name: 'Croissant with Brie',
     category: 'sandwiches',
     price: 39,
-    description: 'Croissant with brie cheese and figs.',
-    image: 'https://thumbs.dreamstime.com/b/fresh-croissant-sandwich-brie-cheese-arugula-figs-delicious-breakfast-tasty-food-fresh-croissant-sandwich-brie-129249621.jpg',
+    description: 'Croissant with creamy French brie cheese and sweet figs.',
+    image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -455,7 +453,7 @@ window.MENU_ITEMS = [
     category: 'sandwiches',
     price: 20,
     description: 'Smoked turkey breast, barbecue sauce, caramelized onions and fresh mozzarella on warm garlic olive oil focaccia.',
-    image: 'https://substackcdn.com/image/fetch/$s_!LW3Z!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F35639a1a-471f-4e41-b205-42b1502dafd7_800x1080.png',
+    image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -471,8 +469,8 @@ window.MENU_ITEMS = [
     name: 'Focaccia with Tofu',
     category: 'sandwiches',
     price: 20,
-    description: 'Warm focaccia with tofu, avocado, and fresh vegetables.',
-    image: 'https://browngirlveganeats.com/wp-content/uploads/2025/06/IMG_9575.jpg',
+    description: 'Warm focaccia with seasoned tofu, avocado, and fresh crisp vegetables.',
+    image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -491,7 +489,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 16,
     description: 'Classic flaky, golden, layered French butter croissant baked fresh every morning.',
-    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -511,7 +509,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 18,
     description: 'Filled with rich almond frangipane cream, topped with toasted sliced almonds and dusted with powdered sugar.',
-    image: 'https://i0.wp.com/loaves-and-such.com/wp-content/uploads/2024/10/Pistachio-Croissants.jpg?resize=750%2C495&ssl=1',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=75',
     tags: ['bestseller'],
     inStock: true,
     options: {
@@ -525,7 +523,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 17,
     description: 'Flaky pastry filled with rich raspberry jam.',
-    image: 'https://ashbaber.com/wp-content/uploads/2023/03/4-raspberry-and-almond-croissants-small.jpg',
+    image: 'https://images.unsplash.com/photo-1583338917451-face2751d8d5?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -539,7 +537,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 20,
     description: 'Classic cinnamon roll made with premium cinnamon and drizzled with cream cheese frosting.',
-    image: 'https://zira.uz/wp-content/uploads/2018/10/sinnabon-4.jpg',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -553,7 +551,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 14,
     description: 'Soft banana muffin with chocolate chips.',
-    image: 'https://noshingwiththenolands.com/wp-content/uploads/2022/08/Chocolate-Chip-Banana-Muffins-horizontal-on-a-cooling-rack-5-Custom-680x453.jpg',
+    image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -567,7 +565,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 11,
     description: 'Classic cookie with chocolate chips.',
-    image: 'https://sp-ao.shortpixel.ai/client/to_webp,q_lossless,ret_img,w_1707/https://www.thepalatablelife.com/wp-content/uploads/2025/03/classic-chocolate-chip-cookies-2-scaled.jpg',
+    image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -581,7 +579,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 11,
     description: 'Matcha cookies with white chocolate chips.',
-    image: 'https://www.savorysweetspoon.com/wp-content/uploads/2023/03/Matcha-White-Chocolate-Cookies-2-960x1200.jpg',
+    image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -595,7 +593,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 11,
     description: 'Classic cookie with pecan.',
-    image: 'https://crisco.com/wp-content/uploads/2025/07/Toasted-Pecan-Cookies-9-scaled.jpg',
+    image: 'https://images.unsplash.com/photo-1548848221-0c2e497ed557?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -609,7 +607,7 @@ window.MENU_ITEMS = [
     category: 'pastries',
     price: 16,
     description: 'Classic Carrot Cake with nuts.',
-    image: 'https://healthynibblesandbits.com/wp-content/uploads/2016/02/Carrot-Zucchini-Cake-9-624x935.jpg',
+    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
@@ -625,20 +623,14 @@ window.MENU_ITEMS = [
     category: 'beans',
     price: 95,
     description: 'Single Origin Whole Bean. Light Roast with vibrant floral jasmine notes, bergamot tea, and wild peach sweetness.',
-    image: 'https://static.tildacdn.net/tild6530-3731-4163-a562-373538346333/logo.png',
+    image: 'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=600&q=75',
     tags: [],
     inStock: true,
     options: {
       grind: [
         { name: 'Whole Bean', price: 0 },
-        { name: 'Espresso Grind', price: 0 },
-        // { name: 'Filter / Pour-Over Grind', price: 0 },
-        // { name: 'French Press Grind', price: 0 }
-      ],
-      // weight: [
-      //   { name: '250g Bag', price: 0 },
-      //   { name: '1kg Bag', price: 95 }
-      // ]
+        { name: 'Espresso Grind', price: 0 }
+      ]
     }
   },
   {
@@ -647,19 +639,14 @@ window.MENU_ITEMS = [
     category: 'beans',
     price: 120,
     description: 'Single Origin Whole Bean. Medium Roast featuring rich red apple acidity, dark caramel sweetness, and milk chocolate finish.',
-    image: 'https://d3m9l0v76dty0.cloudfront.net/system/photos/6432499/large/e583fb4dc8e420bbfa3949b2bc8ef697.jpg',
+    image: 'https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?auto=format&fit=crop&w=600&q=75',
     tags: ['vegan'],
     inStock: true,
     options: {
       grind: [
         { name: 'Whole Bean', price: 0 },
-        { name: 'Espresso Grind', price: 0 },
-        // { name: 'Filter / Pour-Over Grind', price: 0 }
-      ],
-      // weight: [
-      //   { name: '250g Bag', price: 0 },
-      //   { name: '1kg Bag', price: 90 }
-      // ]
+        { name: 'Espresso Grind', price: 0 }
+      ]
     }
-  },
+  }
 ];
