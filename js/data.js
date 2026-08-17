@@ -127,7 +127,7 @@ window.MENU_ITEMS = [
     price: 13,
     description: 'Espresso diluted with hot water for a smooth, rich cup.',
     image: 'https://images.unsplash.com/photo-1551030173-122aabc4489c?auto=format&fit=crop&w=600&q=75',
-    tags: [],
+    tags: ['bestseller'],
     inStock: true,
     options: {
       size: [
@@ -152,7 +152,7 @@ window.MENU_ITEMS = [
     price: 12,
     description: 'Espresso served over iced cold water and ice cubes.',
     image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=75',
-    tags: [],
+    tags: ['bestseller'],
     inStock: true,
     options: {
       size: [
@@ -306,7 +306,7 @@ window.MENU_ITEMS = [
     price: 17,
     description: 'Iced espresso topped with thick whipped cream and grated chocolate.',
     image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=75',
-    tags: [],
+    tags: ['special'],
     inStock: true,
     options: {
       TakeAway: { name: 'Take Away', price: 0 }
@@ -319,7 +319,7 @@ window.MENU_ITEMS = [
     price: 14,
     description: 'Slow cold-steeped artisan single-origin brew over ice.',
     image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=75',
-    tags: [],
+    tags: ['special'],
     inStock: true,
     options: {
       size: [
